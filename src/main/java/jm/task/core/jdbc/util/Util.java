@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Util {
     private String userName = "root";
-    private String password = "12345iB";
+    private String password = "password";
     private String connectionUrl = "jdbc:mysql://localhost:3306/lesson113?serverTimezone=Europe/Moscow&useSSL=false";
     Connection connection = null;
 
