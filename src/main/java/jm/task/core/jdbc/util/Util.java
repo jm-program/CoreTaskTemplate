@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Util {
     private String userName = "root";
-    private String password = "password";
+    private String password = "java-mentor";
     private String connectionUrl = "jdbc:mysql://localhost:3306/lesson113?serverTimezone=Europe/Moscow&useSSL=false";
     Connection connection = null;
 
