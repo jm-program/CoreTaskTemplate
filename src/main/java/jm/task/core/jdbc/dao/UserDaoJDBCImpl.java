@@ -11,14 +11,14 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     Util util = new Util();
-    private static Statement pipe;
+    private static Statement myStatement;
     final String DATABASE = "USER";
     final String TABLE_NAME = "User";
 
     public UserDaoJDBCImpl() {
         try {
             util.connect();
-            pipe = util.getMypipe();
+            myStatement = util.getmyStatement();
             System.out.println("Connection seccess");
         } catch (Exception e) {
             System.out.println("Connection ERROR!!");
@@ -28,13 +28,13 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
 
         try {
-            pipe.execute("CREATE DATABASE " + DATABASE);
+            myStatement.execute("CREATE DATABASE " + DATABASE);
             System.out.println("Database " + "'" + DATABASE + "'" + " creation success");
         } catch (SQLException throwables) {
             System.out.println("Database " + "'" + DATABASE + "'" + " is exits");
         }
         try {
-            pipe.executeUpdate("CREATE TABLE " + DATABASE + "." + TABLE_NAME + "(" +
+            myStatement.executeUpdate("CREATE TABLE " + DATABASE + "." + TABLE_NAME + "(" +
                     "id INT AUTO_INCREMENT ," +
                     "name VARCHAR(40) NOT NULL," +
                     "lastname VARCHAR(40)," +
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try {
-            pipe.execute("DROP DATABASE " + DATABASE);
+            myStatement.execute("DROP DATABASE " + DATABASE);
             System.out.println("Database " + "'" + DATABASE + "'" + " was removed");
         } catch (SQLException throwables) {
             System.out.println("ERROR!! Database" + "'" + DATABASE + "'" + " remove problem");
@@ -60,7 +60,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try {
-            pipe.execute("INSERT INTO " + DATABASE + "." + TABLE_NAME + " (name, lastname, age) " +
+            myStatement.execute("INSERT INTO " + DATABASE + "." + TABLE_NAME + " (name, lastname, age) " +
                     "VALUES(" + "'" + name + "', '" + lastName + "', '" + age + "')");
             System.out.println("User с именем " + "'" + name + "'" + "добавлен в базу данных");
         } catch (SQLException throwables) {
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try {
-            pipe.execute("DELETE FROM " + DATABASE + "." + TABLE_NAME + " WHERE id='" + id + "';");
+            myStatement.execute("DELETE FROM " + DATABASE + "." + TABLE_NAME + " WHERE id='" + id + "';");
             System.out.println("User with id=" + id + " deleted");
         } catch (SQLException throwables) {
         }
@@ -80,7 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         ResultSet tmp = null;
         try {
-            tmp = pipe.executeQuery("SELECT * FROM " + DATABASE + "." + TABLE_NAME + ";");
+            tmp = myStatement.executeQuery("SELECT * FROM " + DATABASE + "." + TABLE_NAME + ";");
         } catch (SQLException throwables) {
             System.out.println("Reading Table Error");
         }
@@ -105,7 +105,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try {
-            pipe.execute("DELETE FROM " + DATABASE + "." + TABLE_NAME);
+            myStatement.execute("DELETE FROM " + DATABASE + "." + TABLE_NAME);
             System.out.println("Clearing table success");
         } catch (SQLException throwables) {
         }

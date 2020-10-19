@@ -12,10 +12,10 @@ public class Util {
     private final String CONNECTION = "jdbc:mysql://localhost:3306/?useUnicode=true&serverTimezone=UTC";
     private final String username = "Test";
     private final String password = "1262";
-    private Statement mypipe;
+    private Statement myStatement;
 
-    public Statement getMypipe() {
-        return mypipe;
+    public Statement getmyStatement() {
+        return myStatement;
     }
 
     public void connect() {
@@ -27,7 +27,7 @@ public class Util {
         }
         try {
             Connection connection_link = DriverManager.getConnection(CONNECTION, username, password);
-            mypipe = connection_link.createStatement();
+            myStatement = connection_link.createStatement();
             System.out.println("SQL Server connection success");
         } catch (SQLException throwables) {
             throw new IllegalStateException("Cannot connect SQL Server");
@@ -35,9 +35,9 @@ public class Util {
     }
 
     public void close() {
-        if (mypipe != null){
+        if (myStatement != null) {
             try {
-                mypipe.close();
+                myStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
