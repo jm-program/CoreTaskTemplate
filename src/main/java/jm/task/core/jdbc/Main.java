@@ -1,6 +1,5 @@
 package jm.task.core.jdbc;
 
-import java.sql.*;
 import java.util.List;
 
 import jm.task.core.jdbc.model.User;
