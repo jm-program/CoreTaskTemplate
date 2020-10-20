@@ -45,7 +45,6 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println(throwables);
             System.out.println("ERROR!! Table " + TABLE_NAME + " creation");
         }
-        util.close();
     }
 
     public void dropUsersTable() {
@@ -55,7 +54,6 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException throwables) {
             System.out.println("ERROR!! Database" + "'" + DATABASE + "'" + " remove problem");
         }
-        util.close();
     }
 
     public void saveUser(String name, String lastName, byte age) {
@@ -65,7 +63,6 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("User с именем " + "'" + name + "'" + "добавлен в базу данных");
         } catch (SQLException throwables) {
         }
-        util.close();
     }
 
     public void removeUserById(long id) {
@@ -74,7 +71,6 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("User with id=" + id + " deleted");
         } catch (SQLException throwables) {
         }
-        util.close();
     }
 
     public List<User> getAllUsers() {
@@ -98,7 +94,6 @@ public class UserDaoJDBCImpl implements UserDao {
         for (int i = 0; i < userlist.size(); i++) {
             System.out.println(userlist.get(i));
         }
-        util.close();
 
         return userlist;
     }
@@ -109,6 +104,5 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Clearing table success");
         } catch (SQLException throwables) {
         }
-        util.close();
     }
 }
