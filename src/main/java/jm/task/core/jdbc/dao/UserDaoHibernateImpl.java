@@ -118,9 +118,13 @@ public class UserDaoHibernateImpl implements UserDao{
     @Override
     public List<User> getAllUsers() {
         List<User> allUsers = new ArrayList<>();
+<<<<<<< Updated upstream
         try {
             Session session = sessionFactory.openSession();
             session.getTransaction();
+=======
+        try (Session session = sessionFactory.openSession()) {
+>>>>>>> Stashed changes
 
             allUsers = session.createQuery("From " + User.class.getSimpleName()).list();
             session.close();

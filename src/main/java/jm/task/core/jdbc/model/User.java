@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @PrimaryKeyJoinColumn
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
