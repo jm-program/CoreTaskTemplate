@@ -1,0 +1,8 @@
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDaoJDBCImpl.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/util/Util.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDao.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/service/UserService.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/service/UserServiceImpl.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/Main.java
+/Users/disant/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/model/User.java
