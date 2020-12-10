@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
         Util util = new Util();
         Connection conn = util.getConnection(URL,USERNAME,PASSWORD);
 
-        //USE productsdb;
         String SQL = "DROP TABLE IF EXISTS " + table; // String table = "new_table2";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate("USE mydbtest2");
+        Statement statement = conn.createStatement();// создаем соединение
+
+        statement.executeUpdate("USE mydbtest2");// Установили бд в качестве используемой
         try {
             statement.executeUpdate(SQL);
         } catch (SQLException throwables) {
@@ -52,7 +52,22 @@ public class UserServiceImpl implements UserService {
         conn.close();
     }
 
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(String name, String lastName, byte age) throws SQLException {
+        Util util = new Util();
+        Connection conn = util.getConnection(URL,USERNAME,PASSWORD);
+        String SQL = "INSERT `" + table + "`(`name`, `lastname`, `age`) VALUES ('" +
+                name + "', '" + lastName + "', '" + age + "')";
+        Statement statement = conn.createStatement();// создаем соединение
+
+        statement.executeUpdate("USE mydbtest2");// Установили бд в качестве используемой
+        try {
+            statement.executeUpdate(SQL);
+        } catch (SQLException throwables) {
+            System.out.println("Не удалось Сохранить юзера");
+        }
+        System.out.println("Сохранили юзера");
+        statement.close();
+        conn.close();
 
     }
 
