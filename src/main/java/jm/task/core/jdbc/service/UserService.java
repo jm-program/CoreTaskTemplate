@@ -12,9 +12,9 @@ public interface UserService {
 
     void saveUser(String name, String lastName, byte age) throws SQLException;
 
-    void removeUserById(long id);
+    void removeUserById(long id) throws SQLException;
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws SQLException;
 
-    void cleanUsersTable();
+    void cleanUsersTable() throws SQLException;
 }
