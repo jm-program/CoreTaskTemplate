@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="TaskJDBC" target="8" />
+      <module name="TaskJDBC" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
