@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    String table = "new_table2";
+    String table = "new_table";
     public UserDaoHibernateImpl() {
 
     }
@@ -35,7 +35,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             Session session = Util.getSession();
             Transaction transaction = session.beginTransaction();
-            String sql = "DROP TABLE IF EXISTS new_table2";
+            String sql = "DROP TABLE IF EXISTS new_table";
             session.createSQLQuery(sql).executeUpdate();
             transaction.commit();
             session.close();
@@ -58,20 +58,34 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
     Session session = Util.getSession();
     Transaction transaction = session.beginTransaction();
-    session.
 
+    Query query = session.createQuery("DELETE User WHERE id = :id");
+//  String SQL = "DELETE FROM " + table + " WHERE id = " + id;
+//  Query query = session.createSQLQuery(SQL);
+    query.setParameter("id", id);
+    query.executeUpdate();
     transaction.commit();
     session.close();
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return null;
+
+    public List<User> getAllUsers()
+    {
+    Session session = Util.getSession();
+    List <User> user =null;
+    user = session.createQuery("From User").list();
+    session.close();
+        return user;
     }
 
     @Override
     public void cleanUsersTable() {
-
+        Session session = Util.getSession();
+        Transaction transaction = session.getTransaction();
+        session.createQuery("DELETE FROM User").executeUpdate();
+        transaction.commit();
+        session.close();
     }
 
 }

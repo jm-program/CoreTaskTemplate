@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 //через hibernate
-        new UserServiceImpl().createUsersTable();// добавление таблицы
+        //new UserServiceImpl().createUsersTable();// добавление таблицы
 
 //        new UserServiceImpl().saveUser("Александр", "Пушкин", (byte) 37);
 //        new UserServiceImpl().saveUser("Владимир", "Высотский", (byte) 41);
@@ -24,17 +24,17 @@ public class Main {
 //        new UserServiceImpl().saveUser("ВладимирДоп", "Набоков", (byte) 65);
 //        new UserServiceImpl().saveUser("new", "new_Набоков", (byte) 65);
 
-        new UserDaoHibernateImpl().removeUserById(3);
+//        new UserDaoHibernateImpl().removeUserById(2);
+
+        List<User> arr = new UserServiceImpl().getAllUsers();
+        arr.stream().forEach(user -> System.out.println(user.toString()));
+        new UserServiceImpl().cleanUsersTable();// Работет
+
+
+
         Util.getSessionFactory().close();
         //new UserServiceImpl().dropUsersTable();// Удаление таблицы
 //------------
-
-       //new UserServiceImpl().createUsersTable();// добавление таблицы
-
-       //new UserServiceImpl().saveUser("Александр", "Пушкин", (byte) 37);
-       //new UserServiceImpl().saveUser("Владимир", "Высотский", (byte) 41);
-       //new UserServiceImpl().saveUser("Зинаида", "Серебрякова", (byte) 69);
-       //new UserServiceImpl().saveUser("ВладимирДоп", "Набоков", (byte) 65);
 
         //new UserServiceImpl().removeUserById(3);
 

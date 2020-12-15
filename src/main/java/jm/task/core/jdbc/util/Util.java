@@ -33,8 +33,8 @@ public class Util {
                     configuration.getProperties()).build();
 
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);// соединение создание фабрики
-        } catch (HibernateException he) {
-            he.printStackTrace();
+        } catch (HibernateException xe) {
+            xe.printStackTrace();
         }
     }
     public static Configuration getConfig() {
