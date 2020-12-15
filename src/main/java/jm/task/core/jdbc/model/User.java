@@ -1,12 +1,14 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table
+@Entity//Эта аннотация позволяет Java-объектам вашего класса быть связанными с БД.
+@Table(name = "new_table")//тут надо  написать название таблицы (name = "Название")
+
 public class User {
-    @Id
+
+    @Id// Отсутствует сеттер так как это указание, что поле является идентификатором объектов этого класса
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //проверить надо ли
     private Long id;
 
     @Column
@@ -59,4 +61,12 @@ public class User {
     public void setAge(Byte age) {
         this.age = age;
     }
+
+    @Override
+    public String toString(){
+    return   "User " + "name = " + name +
+            ", lastName='" + lastName +
+            ", age=" + age;
+    }
+
 }
