@@ -16,13 +16,13 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 //через hibernate
-        //new UserServiceImpl().createUsersTable();// добавление таблицы
+        new UserServiceImpl().createUsersTable();// добавление таблицы
 
-//        new UserServiceImpl().saveUser("Александр", "Пушкин", (byte) 37);
-//        new UserServiceImpl().saveUser("Владимир", "Высотский", (byte) 41);
-//        new UserServiceImpl().saveUser("Зинаида", "Серебрякова", (byte) 69);
-//        new UserServiceImpl().saveUser("ВладимирДоп", "Набоков", (byte) 65);
-//        new UserServiceImpl().saveUser("new", "new_Набоков", (byte) 65);
+        new UserServiceImpl().saveUser("Александр", "Пушкин", (byte) 37);
+        new UserServiceImpl().saveUser("Владимир", "Высотский", (byte) 41);
+        new UserServiceImpl().saveUser("Зинаида", "Серебрякова", (byte) 69);
+        new UserServiceImpl().saveUser("ВладимирДоп", "Набоков", (byte) 65);
+        new UserServiceImpl().saveUser("new", "new_Набоков", (byte) 65);
 
 //        new UserDaoHibernateImpl().removeUserById(2);
 

@@ -26,7 +26,7 @@ public class UserDaoHibernateImpl implements UserDao {
         session.createSQLQuery(sql).executeUpdate();//прочитать подробнее почему executeUpdate озвращает int
         Transaction transaction = session.beginTransaction();
         transaction.commit();
-        System.out.println("Таблица готова");
+        //System.out.println("Таблица готова");
         session.close();
     }
 
@@ -82,8 +82,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         Session session = Util.getSession();
-        Transaction transaction = session.getTransaction();
-        session.createQuery("DELETE FROM User").executeUpdate();
+        Transaction transaction = session.beginTransaction();//
+        String HQL= "DELETE FROM User";
+        session.createQuery(HQL).executeUpdate();
         transaction.commit();
         session.close();
     }
