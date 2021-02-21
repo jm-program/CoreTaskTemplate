@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService {
   private static Connection connection;
   public void createUsersTable() {
         try {
-//          Connection connection = Util.getDBConnection();
           if(connection == null){
             connection = Util.getDBConnection();
           }
