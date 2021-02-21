@@ -12,9 +12,13 @@ import java.util.List;
 import jm.task.core.jdbc.util.Util;
 
 public class UserServiceImpl implements UserService {
-
+  Connection connection;
   public void createUsersTable() {
-        try {Connection connection = Util.getDBConnection();
+        try {
+//          Connection connection = Util.getDBConnection();
+          if(connection == null){
+            connection = Util.getDBConnection();
+          }
             Statement stmt = connection.createStatement();
 
           String creatTable = "CREATE TABLE IF NOT EXISTS user_table"
@@ -30,7 +34,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public void dropUsersTable() {
-        try{ Connection connection = Util.getDBConnection();
+        try{
+          if(connection == null){
+          connection = Util.getDBConnection();
+        }
             Statement stmt = connection.createStatement();
             String dropTable = "DROP TABLE IF EXISTS user_table";
             stmt.executeUpdate(dropTable);
@@ -43,7 +50,10 @@ public class UserServiceImpl implements UserService {
 
     public void saveUser(String name, String lastName, byte age) {
 
-        try {Connection connection = Util.getDBConnection();
+        try {
+          if(connection == null){
+            connection = Util.getDBConnection();
+          }
           String data = "INSERT INTO user_table(name,lastName,age) VALUES (?,?,?)";
           PreparedStatement stmt = connection.prepareStatement(data);
             stmt.setString(1,name);
@@ -60,7 +70,10 @@ public class UserServiceImpl implements UserService {
 
     public void removeUserById(long id) {
       String SQL = ("DELETE FROM user_table WHERE ID = "+ id);
-      try {Connection connection = Util.getDBConnection();
+      try {
+        if(connection == null){
+          connection = Util.getDBConnection();
+        }
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(SQL);
         stmt.close();
@@ -72,7 +85,10 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
       String SQL = "SELECT * FROM user_table";
       List<User> list = new ArrayList<>();
-      try{ Connection connection = Util.getDBConnection() ;
+      try{
+        if(connection == null){
+          connection = Util.getDBConnection();
+        }
         Statement stmt = connection.createStatement();
         ResultSet resultSet = stmt.executeQuery(SQL);
         while (resultSet.next()){
@@ -89,7 +105,10 @@ public class UserServiceImpl implements UserService {
 
     public void cleanUsersTable() {
       String SQL = "DELETE FROM user_table";
-      try {Connection connection = Util.getDBConnection();
+      try {
+        if(connection == null){
+          connection = Util.getDBConnection();
+        }
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(SQL);
 
