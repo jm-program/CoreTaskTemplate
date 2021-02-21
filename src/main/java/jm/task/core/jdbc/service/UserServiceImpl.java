@@ -12,7 +12,7 @@ import java.util.List;
 import jm.task.core.jdbc.util.Util;
 
 public class UserServiceImpl implements UserService {
-  Connection connection;
+  private static Connection connection;
   public void createUsersTable() {
         try {
 //          Connection connection = Util.getDBConnection();
