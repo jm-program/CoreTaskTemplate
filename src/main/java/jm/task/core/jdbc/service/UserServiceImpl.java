@@ -12,18 +12,18 @@ import java.util.List;
 import jm.task.core.jdbc.util.Util;
 
 public class UserServiceImpl implements UserService {
-    private static String data = "INSERT INTO user_table(name,lastName,age) VALUES (?,?,?)";
-    private static String creatTable = "CREATE TABLE IF NOT EXISTS user_table"
-        + "(id INTEGER not NULL AUTO_INCREMENT PRIMARY KEY ,"
-        + "name VARCHAR(50),"
-        + "lastName VARCHAR(50),"
-        + "age INT(3))";
 
-    public void createUsersTable() {
+  public void createUsersTable() {
         try {Connection connection = Util.getDBConnection();
-            Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
 
-            statement.executeUpdate(creatTable);
+          String creatTable = "CREATE TABLE IF NOT EXISTS user_table"
+              + "(id INTEGER not NULL AUTO_INCREMENT PRIMARY KEY ,"
+              + "name VARCHAR(50),"
+              + "lastName VARCHAR(50),"
+              + "age INT(3))";
+              stmt.executeUpdate(creatTable);
+              stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -31,9 +31,10 @@ public class UserServiceImpl implements UserService {
 
     public void dropUsersTable() {
         try{ Connection connection = Util.getDBConnection();
-            Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
             String dropTable = "DROP TABLE IF EXISTS user_table";
-            statement.executeUpdate(dropTable);
+            stmt.executeUpdate(dropTable);
+            stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -43,11 +44,13 @@ public class UserServiceImpl implements UserService {
     public void saveUser(String name, String lastName, byte age) {
 
         try {Connection connection = Util.getDBConnection();
-            PreparedStatement stmt = connection.prepareStatement(data);
+          String data = "INSERT INTO user_table(name,lastName,age) VALUES (?,?,?)";
+          PreparedStatement stmt = connection.prepareStatement(data);
             stmt.setString(1,name);
             stmt.setString(2,lastName);
             stmt.setInt(3,age);
             stmt.executeUpdate();
+            stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -56,11 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public void removeUserById(long id) {
-      String SQL = ("DELETE * FROM staff WHERE ID = "+ id);
+      String SQL = ("DELETE FROM user_table WHERE ID = "+ id);
       try {Connection connection = Util.getDBConnection();
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(SQL);
-
+        stmt.close();
       } catch (SQLException throwables) {
         throwables.printStackTrace();
       }
@@ -77,6 +80,7 @@ public class UserServiceImpl implements UserService {
               ,resultSet.getString(3)
               ,(byte)resultSet.getInt(4)));
         }
+        stmt.close();
       } catch (SQLException throwables) {
         throwables.printStackTrace();
       }
@@ -85,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     public void cleanUsersTable() {
       String SQL = "DELETE FROM user_table";
-      try (Connection connection = Util.getDBConnection()) {
+      try {Connection connection = Util.getDBConnection();
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(SQL);
 
