@@ -9,7 +9,7 @@
         <module name="TaskJDBC" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8">
       <module name="TaskJDBC" target="7" />
     </bytecodeTargetLevel>
   </component>
