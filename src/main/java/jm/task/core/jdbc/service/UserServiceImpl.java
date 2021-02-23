@@ -48,22 +48,38 @@ public class UserServiceImpl implements UserService {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-
+        User user = new User();
+          user.setName(name);
+          user.setLastName(lastName);
+          user.setAge(age);
+        long id  = -1;
+          user.setId( id);
         try {
           if(connection == null){
             connection = Util.getDBConnection();
           }
           String data = "INSERT INTO user_table(name,lastName,age) VALUES (?,?,?)";
           PreparedStatement stmt = connection.prepareStatement(data);
-            stmt.setString(1,name);
-            stmt.setString(2,lastName);
-            stmt.setInt(3,age);
+            stmt.setString(1,user.getName());
+            stmt.setString(2,user.getLastName());
+            stmt.setInt(3,user.getAge());
             stmt.executeUpdate();
+
+          ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+          if(rs.next()){
+            id = rs.getLong(1);
+          }
+
             stmt.close();
+//          Statement statement = connection.createStatement();
+//           statement.executeQuery("");
+//            user.setId(rs.getLong(1));
+            String add = new String("User с именем – " + user.getName() +" добавлен в базу данных");
+          System.out.println(add);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        user.setId( id);
 
     }
 
@@ -91,7 +107,7 @@ public class UserServiceImpl implements UserService {
         Statement stmt = connection.createStatement();
         ResultSet resultSet = stmt.executeQuery(SQL);
         while (resultSet.next()){
-          list.add( new User(resultSet.getString(2)
+          list.add( new User(resultSet.getLong(1),resultSet.getString(2)
               ,resultSet.getString(3)
               ,(byte)resultSet.getInt(4)));
         }

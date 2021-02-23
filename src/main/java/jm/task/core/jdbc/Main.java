@@ -3,28 +3,27 @@ package jm.task.core.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
 public class Main {
 
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        List <User> listUser = new ArrayList<>();
+      UserService us = new UserServiceImpl();
 
-         final String testName = "Ivan";
-         final String testLastName = "Ivanov";
-         final byte testAge = 5;
-//        listUser.add(new User("Ivan","Ivanov",(byte)36));
-//        listUser.add(new User("Petr","Petrov",(byte)27));
-//        listUser.add(new User("Klim","Klimov",(byte)42));
-//
-//        for(User user: listUser){
-//            System.out.println(user.getName() + " " + user.getLastName() + " " + user.getAge() + " лет");
-//        }
-        UserServiceImpl usi = new UserServiceImpl();
-//        usi.cleanUsersTable();
-        usi.createUsersTable();
-        usi.saveUser(testName,testLastName, testAge);
-        usi.dropUsersTable();
+      us.createUsersTable();
+      us.saveUser("Ivan","Ivanov",(byte)37);
+      us.saveUser("Petr","Petrov",(byte)14);
+      us.saveUser("Gleb","Zemnuhov",(byte)17);
+      us.saveUser("Ivan","Petrov",(byte)34);
+      System.out.println();
+      for (User u: us.getAllUsers()){
+        System.out.println(u.toString());
+      }
+      us.cleanUsersTable();
+      us.dropUsersTable();
+
+
     }
 }

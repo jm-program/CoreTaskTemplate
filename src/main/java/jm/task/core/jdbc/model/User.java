@@ -32,9 +32,14 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
+    public User(Long id, String name, String lastName, Byte age) {
         this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
     }
+
+    public void setId(Long id) {this.id = id; }
 
     public String getName() {
         return name;
@@ -58,5 +63,10 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    public String toString(){
+
+        return this.getId() +" "+ this.getName() +" "+ this.getLastName() +" "+ this.getAge();
     }
 }

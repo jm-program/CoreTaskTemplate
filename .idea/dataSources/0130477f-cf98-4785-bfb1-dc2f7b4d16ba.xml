@@ -911,29 +911,5 @@ SELECT|sys.sys_config
       <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE,CREATE ROLE,DROP ROLE!
 </ObjectGrants>
     </user>
-    <table id="284" parent="2" name="user_table"/>
-    <column id="285" parent="284" name="id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="286" parent="284" name="name">
-      <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
-    </column>
-    <column id="287" parent="284" name="lastName">
-      <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
-    </column>
-    <column id="288" parent="284" name="age">
-      <Position>4</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <key id="289" parent="284" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
   </database-model>
 </dataSource>
