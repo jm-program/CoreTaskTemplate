@@ -22,7 +22,7 @@ public class Util {
 
   public static Connection getDBConnection(){
     try {
-      if(connection == null){
+      if(connection == null || connection.isClosed()){
         connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
       }
     } catch (SQLException  throwables) {
@@ -35,7 +35,7 @@ public class Util {
 
   private static SessionFactory sessionFactory;
   public static SessionFactory getSessionFactory() {
-    if (sessionFactory == null) {
+    if (sessionFactory == null ) {
       try {
         Configuration configuration = new Configuration();
 
