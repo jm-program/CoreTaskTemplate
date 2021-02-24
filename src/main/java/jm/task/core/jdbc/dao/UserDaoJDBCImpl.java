@@ -15,7 +15,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    private static Connection connection;
     public void createUsersTable() {
         Connection connection = null;
         Statement stmt = null;
