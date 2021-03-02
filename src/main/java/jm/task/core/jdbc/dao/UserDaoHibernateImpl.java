@@ -8,7 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
-
+    private SessionFactory sessionFactory = null;
+    private Session session = null;
     public UserDaoHibernateImpl() {
 
     }
@@ -16,26 +17,58 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        super.createUsersTable();
+        try {
+            String creatTable = "CREATE TABLE IF NOT EXISTS user_table"
+                + "(id INTEGER not NULL AUTO_INCREMENT PRIMARY KEY ,"
+                + "name VARCHAR(50),"
+                + "lastName VARCHAR(50),"
+                + "age INT(3))";
+            sessionFactory = Util.getSessionFactory();
+            session = sessionFactory.openSession();
+//            session.beginTransaction();
+            session.createSQLQuery(creatTable)
+                .executeUpdate();
+        }catch (Exception e){
+            System.out.println("Ошибка creatTable: " + e);
+        }finally {
+            try{session.close();}catch (Exception ignored){};
+            try{
+                sessionFactory.getCurrentSession().close();
+
+            }catch (Exception ignored){};
+        }
+
     }
 
     @Override
     public void dropUsersTable() {
-        super.dropUsersTable();
+        try {
+            sessionFactory = Util.getSessionFactory();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.createSQLQuery("drop table user_table")
+                .executeUpdate();
+        }catch (Exception e){
+            System.out.println("Ошибка dropTable: " + e);
+        }finally {
+            try{session.close();}catch (Exception ignored){};
+            try{
+                sessionFactory.getCurrentSession().close();
+
+            }catch (Exception ignored){};
+        }
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        User user = new User(name,lastName,age);
-        SessionFactory sessionFactory = null;
-        Session session = null;
+//        User user = new User(name,lastName,age);
         try{
             sessionFactory = Util.getSessionFactory();
-            session = sessionFactory.getCurrentSession();
+            session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(user);
+            session.save(new User(name,lastName,age));
             session.getTransaction().commit();
-            String addUser = new String("User с именем – " + user.getName() +" добавлен в базу данных");
+            String addUser = new String("User с именем – " + name +" добавлен в базу данных");
             System.out.println(addUser);
         }catch (Exception e){
             System.out.println("Ошибка saveUser: " + e);
@@ -51,11 +84,9 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        SessionFactory sessionFactory = null;
-        Session session = null;
         try {
             sessionFactory = Util.getSessionFactory();
-            session = sessionFactory.getCurrentSession();
+            session = sessionFactory.openSession();
             session.beginTransaction();
             User user = (User) session.load(User.class, id);
             session.delete(user);
@@ -73,18 +104,16 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        SessionFactory sessionFactory = null;
-        Session session = null;
         List<User> list = null;
         try {
             sessionFactory = Util.getSessionFactory();
-            session = sessionFactory.getCurrentSession();
+            session = sessionFactory.openSession();
             session.beginTransaction();
             list = session.createQuery("from User").list();
             session.getTransaction().commit();
 
         }catch (Exception e){
-            System.out.println("Ошибка в removeUserById: "+e);
+            System.out.println("Ошибка в getAllUsers: "+e);
         }finally {
             try{session.close();}catch (Exception ignored){};
             try{
@@ -96,8 +125,6 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        SessionFactory sessionFactory = null;
-        Session session = null;
         try {
             sessionFactory = Util.getSessionFactory();
             session = sessionFactory.getCurrentSession();
@@ -106,12 +133,13 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
             session.getTransaction().commit();
 
         }catch (Exception e){
-            System.out.println("Ошибка в removeUserById: "+e);
+            System.out.println("Ошибка в cleanUsersTable: "+e);
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+
+            };
         }
     }
 }

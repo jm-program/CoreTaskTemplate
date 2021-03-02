@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 public class Main {
 
     public static void main(String[] args) {
-        // реализуйте алгоритм здесь
       UserService us = new UserServiceImpl();
 
         us.createUsersTable();
@@ -18,7 +17,7 @@ public class Main {
         us.saveUser("Gleb","Zemnuhov",(byte)17);
         us.saveUser("Ivan","Petrov",(byte)34);
         us.removeUserById(3L);
-
+//
         for (User u: us.getAllUsers()){
           System.out.println(u);
         }
