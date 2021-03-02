@@ -30,12 +30,12 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
                 .executeUpdate();
         }catch (Exception e){
             System.out.println("Ошибка creatTable: " + e);
+            session.getTransaction().rollback();
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+            };
         }
 
     }
@@ -50,18 +50,17 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
                 .executeUpdate();
         }catch (Exception e){
             System.out.println("Ошибка dropTable: " + e);
+            session.getTransaction().rollback();
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+            };
         }
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-//        User user = new User(name,lastName,age);
         try{
             sessionFactory = Util.getSessionFactory();
             session = sessionFactory.openSession();
@@ -72,12 +71,12 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
             System.out.println(addUser);
         }catch (Exception e){
             System.out.println("Ошибка saveUser: " + e);
+            session.getTransaction().rollback();
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+            };
         }
 
     }
@@ -94,11 +93,12 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
         }catch (Exception e){
             System.out.println("Ошибка в removeUserById: "+e);
+            session.getTransaction().rollback();
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+            };
         }
     }
 
@@ -114,11 +114,12 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
         }catch (Exception e){
             System.out.println("Ошибка в getAllUsers: "+e);
+            session.getTransaction().rollback();
         }finally {
-            try{session.close();}catch (Exception ignored){};
-            try{
+            try{session.close();
                 sessionFactory.getCurrentSession().close();
-            }catch (Exception ignored){};
+            }catch (Exception ignored){
+            };
         }
         return list;
     }
@@ -134,11 +135,11 @@ public class UserDaoHibernateImpl extends UserDaoJDBCImpl implements UserDao {
 
         }catch (Exception e){
             System.out.println("Ошибка в cleanUsersTable: "+e);
+            session.getTransaction().rollback();
         }finally {
             try{session.close();
                 sessionFactory.getCurrentSession().close();
             }catch (Exception ignored){
-
             };
         }
     }
