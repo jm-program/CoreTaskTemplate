@@ -26,14 +26,14 @@
          <dependency>
              <groupId>junit</groupId>
              <artifactId>junit</artifactId>
-             <version>4.12</version>
+             <version>4.13.1</version>
              <scope>test</scope>
          </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>8.0.23</version>
         </dependency>
 
         <dependency>
@@ -47,6 +47,16 @@
             <artifactId>hibernate-core</artifactId>
             <version>4.3.10.Final</version>
         </dependency>
-     </dependencies>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.38</version>
+      </dependency>
+      <!--      <dependency>-->
+<!--        <groupId>mysql</groupId>-->
+<!--        <artifactId>mysql-connector-java</artifactId>-->
+<!--        <version>5.1.38</version>-->
+<!--      </dependency>-->
+    </dependencies>
 
 </project>
