@@ -8,8 +8,12 @@ public class Main {
 
         UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
 
-        userDaoJDBC.createUsersTable();
+        // Создание таблицы User(ов)
+        //userDaoJDBC.createUsersTable();
 
+        //Добавление 4 User(ов) в таблицу с данными на свой выбор. После каждого добавления
+        // должен быть вывод в консоль ( User с именем – name добавлен в базу данных )
+        userDaoJDBC.saveUser("biba2","boba2", (byte) 32);
 
     }
 }
