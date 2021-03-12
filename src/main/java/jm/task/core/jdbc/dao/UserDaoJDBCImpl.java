@@ -43,6 +43,23 @@ public class UserDaoJDBCImpl implements UserDao {
     //Удаление таблицы
     public void dropUsersTable() {
 
+        Util util = new Util();
+        Connection connection = util.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
+            statement.execute("DROP TABLE developers;");
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("Создание таблицы User");
+
     }
     //Добавление 4 User(ов) в таблицу с данными на свой выбор
     public void saveUser(String name, String lastName, byte age) {
@@ -76,8 +93,25 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         return null;
     }
+
     //Очистка таблицы User(ов)
     public void cleanUsersTable() {
 
+        Util util = new Util();
+        Connection connection = util.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
+            statement.execute("DELETE FROM user;");
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("Создание таблицы User");
     }
 }
