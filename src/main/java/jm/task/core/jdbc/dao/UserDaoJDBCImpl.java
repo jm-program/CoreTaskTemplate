@@ -3,10 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import static java.sql.DriverManager.getConnection;
@@ -46,18 +43,22 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     //Добавление 4 User(ов) в таблицу с данными на свой выбор
     public void saveUser(String name, String lastName, byte age) {
+        int id = 1;
         Util util = new Util();
         Connection connection = util.getConnection();
-        Statement statement = null;
+        //PreparedStatement preparedStatement = null;
         try {
-            statement = connection.createStatement();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try {
-            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
-            statement.execute("INSERT INTO user (name, lastname, age) VALUES " +
-                    "(?, ?, ?); ");
+            //String sql = "INSERT INTO user (name, lastName, age) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("INSERT INTO  user (id, name, lastName, age) VALUES(?, ?, ?, ?);");
+            //preparedStatement = connection.prepareStatement();
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setInt(4, age);
+
+            preparedStatement.executeUpdate();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
