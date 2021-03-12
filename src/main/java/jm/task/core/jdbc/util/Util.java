@@ -19,6 +19,7 @@ public class Util {
             try (Connection connection = DriverManager.getConnection(url, username, password)){
 
                 System.out.println("Connection to Store DB succesfull!");
+                //1
 
                 //new 10-03//
                 try {
