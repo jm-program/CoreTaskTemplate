@@ -21,6 +21,7 @@ public class Util {
                 System.out.println("Connection to Store DB succesfull!");
                 //1
                 //2
+                //3
                 //new 10-03//
                 try {
                     Statement statement =connection.createStatement();
