@@ -12,19 +12,21 @@ public class Util {
             String username = "rootalex";
             String password = "rootalex";
 
-           // Class.forName("com.mysql.jdbc.Driver");
-             Connection getConnection() {
+            //Class.forName("com.mysql.jdbc.Driver");
+             public Connection getConnection() {
                 Connection connection = null;
             try {
-                connection = DriverManager.getConnection(url, username, password);
+               // Class.forName("com.mysql.cj.jdbc.Drive");
+                 connection = DriverManager.getConnection(url, username, password);
                 System.out.println("Connection to Store DB succesfull!");
                 try {
                     Statement statement = connection.createStatement();
                     //вставка в таблицу
-                    statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
+                   // statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                //return connection;
                 //new end//
             } catch (Exception ex) {
                 System.out.println("Connection failed...");
