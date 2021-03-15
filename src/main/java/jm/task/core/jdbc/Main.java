@@ -1,12 +1,18 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
 
         UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
+        UserService userService = new UserServiceImpl();;
 
         // Создание таблицы User(ов)
         //userDaoJDBC.createUsersTable();
@@ -25,6 +31,18 @@ public class Main {
         // ( User с именем – name добавлен в базу данных )
 
         //Очистка таблицы User(ов)
-        userDaoJDBC.cleanUsersTable();
+        //userDaoJDBC.cleanUsersTable();
+
+        //Получение всех User из базы и вывод в консоль
+        System.out.println(userDaoJDBC.getAllUsers());
+        System.out.println(userService.getAllUsers());
+//        List<User> user = userDaoJDBC.getAllUsers();
+//        for (User s : user) {
+//            System.out.println(s);
+//        }
+
+
+        //закрыть соединения
+        // https://ru.stackoverflow.com/questions/551191/java-%D0%91%D0%94-%D0%9A%D0%BE%D0%BD%D1%81%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B2%D0%B2%D0%BE%D0%B4-%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4
     }
 }

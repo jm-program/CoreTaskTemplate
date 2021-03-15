@@ -4,6 +4,7 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.sql.DriverManager.getConnection;
@@ -58,7 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Создание таблицы User");
+        System.out.println("Удаление таблицы");
 
     }
     //Добавление 4 User(ов) в таблицу с данными на свой выбор
@@ -79,6 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
             //закидывает данные в table
             preparedStatement.executeUpdate();
+            System.out.println("User с именем – "+name+" добавлен в базу данных");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -91,7 +93,41 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     //Получение всех User из базы и вывод в консоль
     public List<User> getAllUsers() {
-        return null;
+
+        List<User> userList = new ArrayList<>();
+
+        Util util = new Util();
+        Connection connection = util.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM USER3");
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        try {
+            //executeQuery применяется для SELECT
+            result = preparedStatement.executeQuery();
+
+            while(result.next()) {
+                //System.out.println(result.getString("user_name")); // считываем имя пользователя, полученной записи
+                String name = result.getString("name");
+                String lastName = result.getString("lastName");
+                Byte age = result.getByte("age");
+
+                userList.add(new User(name, lastName, age));
+                //System.out.println(user.get(1)+"asdasdasdas");
+            }
+
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        //System.out.println("LIST");
+
+
+        return userList;
     }
 
     //Очистка таблицы User(ов)
