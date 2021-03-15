@@ -2,12 +2,9 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.sql.DriverManager.getConnection;
 
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
@@ -16,8 +13,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     // Создание таблицы User(ов)
     public void createUsersTable() {
-        Util util = new Util();
-        Connection connection = util.getConnection();
+        Connection connection = Util.getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -25,27 +21,21 @@ public class UserDaoJDBCImpl implements UserDao {
             throwables.printStackTrace();
         }
         try {
-            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
-            statement.execute("CREATE TABLE User3(\n" +
-                    //auto_increment + primare key, для генерации id
+            statement.execute("CREATE TABLE user3(\n" +
                     "   id INT AUTO_INCREMENT,\n" +
                     "   PRIMARY KEY (id), \n" +
                     "   name VARCHAR(50),\n" +
                     "   lastName VARCHAR(50),\n" +
                     "   age INT\n" +
                     ")");
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Создание таблицы User");
     }
 
     //Удаление таблицы
     public void dropUsersTable() {
-
-        Util util = new Util();
-        Connection connection = util.getConnection();
+        Connection connection = Util.getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -53,88 +43,73 @@ public class UserDaoJDBCImpl implements UserDao {
             throwables.printStackTrace();
         }
         try {
-            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
-            statement.execute("DROP TABLE developers;");
+            statement.execute("DROP TABLE user3;");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Удаление таблицы");
-
     }
+
     //Добавление 4 User(ов) в таблицу с данными на свой выбор
     public void saveUser(String name, String lastName, byte age) {
-       // int id = 1;
-        Util util = new Util();
-        Connection connection = util.getConnection();
-        //PreparedStatement preparedStatement = null;
+        Connection connection = Util.getConnection();
         try {
-            //String sql = "INSERT INTO user (name, lastName, age) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement
                     ("INSERT INTO  user3 (name, lastName, age) VALUES(?, ?, ?);");
-            //preparedStatement = connection.prepareStatement();
-            //preparedStatement.setInt(1, id);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
-
-            //закидывает данные в table
             preparedStatement.executeUpdate();
+
             System.out.println("User с именем – "+name+" добавлен в базу данных");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Добавление 4 User(ов) в таблицу");
     }
-    //???
-    public void removeUserById(long id) {
 
+    //Удаление User из таблицы ( по id )
+    public void removeUserById(long id) {
+        Connection connection = Util.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("DELETE FROM user3 WHERE id = (?)");
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
     //Получение всех User из базы и вывод в консоль
     public List<User> getAllUsers() {
 
         List<User> userList = new ArrayList<>();
 
-        Util util = new Util();
-        Connection connection = util.getConnection();
+        Connection connection = Util.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM USER3");
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        try {
-            //executeQuery применяется для SELECT
+            preparedStatement = connection.prepareStatement("SELECT * FROM user3");
             result = preparedStatement.executeQuery();
 
             while(result.next()) {
-                //System.out.println(result.getString("user_name")); // считываем имя пользователя, полученной записи
                 String name = result.getString("name");
                 String lastName = result.getString("lastName");
                 Byte age = result.getByte("age");
 
                 userList.add(new User(name, lastName, age));
-                //System.out.println(user.get(1)+"asdasdasdas");
             }
-
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //System.out.println("LIST");
-
-
         return userList;
     }
 
     //Очистка таблицы User(ов)
     public void cleanUsersTable() {
-
-        Util util = new Util();
-        Connection connection = util.getConnection();
+        Connection connection = Util.getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -142,12 +117,9 @@ public class UserDaoJDBCImpl implements UserDao {
             throwables.printStackTrace();
         }
         try {
-            //statement.execute("INSERT INTO developers(name, salary) VALUES('biba', 100500);");
-            statement.execute("DELETE FROM user;");
-
+            statement.execute("DELETE FROM user3;");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Создание таблицы User");
     }
 }
