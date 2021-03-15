@@ -21,7 +21,7 @@ public class UserDaoJDBCImpl implements UserDao {
             throwables.printStackTrace();
         }
         try {
-            statement.execute("CREATE TABLE user3(\n" +
+            statement.execute("CREATE TABLE IF NOT EXISTS user3(\n" +
                     "   id INT AUTO_INCREMENT,\n" +
                     "   PRIMARY KEY (id), \n" +
                     "   name VARCHAR(50),\n" +
@@ -43,7 +43,7 @@ public class UserDaoJDBCImpl implements UserDao {
             throwables.printStackTrace();
         }
         try {
-            statement.execute("DROP TABLE user3;");
+            statement.execute("DROP TABLE IF EXISTS user3;");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
