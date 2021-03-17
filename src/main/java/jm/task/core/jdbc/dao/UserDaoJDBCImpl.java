@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+    Util worker = new Util();
+    PreparedStatement preparedStatement;
     public UserDaoJDBCImpl() {
-    }
+            }
 
     public void createUsersTable() throws SQLException {
         final String INSERT_NEW = "CREATE TABLE IF NOT EXISTS `users` (\n" +
@@ -23,8 +25,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 "  PRIMARY KEY (`id`)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8";
 
-        Util worker = new Util();
-        PreparedStatement preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
+        preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
         preparedStatement.execute();
         preparedStatement.close();
     }
@@ -32,16 +33,15 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() throws SQLException {
         final String INSERT_NEW = "DROP TABLE  IF EXISTS users";
 
-        Util worker = new Util();
-        PreparedStatement preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
+        preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
         preparedStatement.execute();
         preparedStatement.close();
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
         final String INSERT_NEW = "INSERT INTO users(name,lastName,age) VALUES(?,?,?)";
-        Util worker = new Util();
-        PreparedStatement preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
+
+        preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
 
         preparedStatement.setString(1, name);
         preparedStatement.setString(2, lastName);
@@ -55,8 +55,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) throws SQLException {
         final String INSERT_NEW = "DELETE FROM users WHERE id =?";
 
-        Util worker = new Util();
-        PreparedStatement preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
+        preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
         preparedStatement.setLong(1, id);
         preparedStatement.execute();
         preparedStatement.close();
@@ -64,7 +63,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() throws SQLException {
 
-        Util worker = new Util();
         List<User> users = new ArrayList<>();
 
         String query = "SELECT * FROM users";
@@ -85,8 +83,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() throws SQLException {
         final String INSERT_NEW = "DELETE FROM users";
 
-        Util worker = new Util();
-        PreparedStatement preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
+        preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
         preparedStatement.execute();
     }
 }
