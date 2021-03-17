@@ -12,7 +12,6 @@ import java.sql.*;
 public class Main {
 
 
-
     private static final String INSERT_NEW = "INSERT INTO users VALUES(?,?,?,?)";
 
 
@@ -23,9 +22,9 @@ public class Main {
         try {
             userService.createUsersTable();
 
-        userService.saveUser("Stive2", "Libovski", (byte) 43);
-        userService.saveUser("Stive3", "Libovski", (byte) 43);
-        userService.saveUser("Stive4", "Libovski", (byte) 43);
+            userService.saveUser("Stive2", "Libovski", (byte) 43);
+            userService.saveUser("Stive3", "Libovski", (byte) 43);
+            userService.saveUser("Stive4", "Libovski", (byte) 43);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
