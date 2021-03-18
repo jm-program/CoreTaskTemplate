@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
     Util worker = new Util();
     PreparedStatement preparedStatement;
     public UserDaoJDBCImpl() {
-            }
+                    }
 
     public void createUsersTable() throws SQLException {
         final String INSERT_NEW = "CREATE TABLE IF NOT EXISTS `users` (\n" +
@@ -85,5 +85,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
         preparedStatement = worker.getConnection().prepareStatement(INSERT_NEW);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }
