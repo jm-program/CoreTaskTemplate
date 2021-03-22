@@ -40,6 +40,16 @@ public class User {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +          // переопределенный метод toString
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public void setName(String name) {
         this.name = name;
     }
