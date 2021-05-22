@@ -44,11 +44,11 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         try (Connection conn = Util.getConn()) {
             String insert = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?);";
-            PreparedStatement preparedStatement = conn.prepareStatement(insert);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setInt(3, age);
-            preparedStatement.execute();
+            PreparedStatement prestmt = conn.prepareStatement(insert);
+            prestmt.setString(1, name);
+            prestmt.setString(2, lastName);
+            prestmt.setInt(3, age);
+            prestmt.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных ");
         } catch (SQLException e) {
             System.err.println("Database connection failed while saving new user");
@@ -70,12 +70,12 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> result = new ArrayList<>();
         try (Connection conn = Util.getConn();
              Statement stmt = conn.createStatement()) {
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM users");
-            while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                String lastName = resultSet.getString("lastName");
-                byte age = (byte) resultSet.getInt("age");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String name = rs.getString("name");
+                String lastName = rs.getString("lastName");
+                byte age = (byte) rs.getInt("age");
                 User user = new User(name, lastName, age);
                 user.setId(id);
                 result.add(user);
