@@ -28,7 +28,6 @@ public class Util {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connect = DriverManager.getConnection(url, user, password);
-            System.out.println("==============================");
         } catch (ClassNotFoundException | SQLException | IOException e) {
             System.err.format("Ошибка подключения к базе данных %s", property.getProperty("db.base"));
             e.printStackTrace();

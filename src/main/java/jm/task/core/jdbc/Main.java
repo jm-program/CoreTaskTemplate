@@ -18,7 +18,6 @@ public class Main {
         for (User user : service.getAllUsers()) {
             System.out.printf("%s", user);
         }
-        System.out.println();
         service.cleanUsersTable();
         service.dropUsersTable();
     }

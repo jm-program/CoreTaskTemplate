@@ -63,9 +63,9 @@ public class User {
     @Override
     public String toString() {
         return "\nПользователь: " +
-                " id: " + id +
-                " Имя: " + name +
-                " Фамилия: " + lastName +
-                " Возраст: " + age + " ";
+                "| id: " + id +
+                "| Имя: " + name +
+                "| Фамилия: " + lastName +
+                "| Возраст: " + age + " ";
     }
 }

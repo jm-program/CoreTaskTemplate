@@ -60,7 +60,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement statement = util.connect().prepareStatement("delete from users where id = ?")) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            System.out.println("Пользователь удален");
+            System.out.println("Пользователь удален\n");
         } catch (SQLException e) {
             System.err.format("Мы не уверены, но кажется id c номером %d в базе данных нет.\nSQL ERROR: %s\n",
                     id, e.getSQLState());
@@ -91,7 +91,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = util.connect()) {
             PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE users");
             statement.executeUpdate();
-            System.out.println("Таблица успешно очищена.");
+            System.out.println("\nТаблица успешно очищена.");
         } catch (SQLException e) {
             System.out.println("Невозможно очистить таблицу пользователей");
         }
