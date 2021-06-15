@@ -13,12 +13,12 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (PreparedStatement statement = util.connect()
-                .prepareStatement("create table if not exists users " +
-                        "(id Integer auto_increment unique not null, " +
-                        "name varchar (255), " +
-                        "lastName varchar (255), " +
-                        "age int, " +
-                        "primary key (id))")) {
+            .prepareStatement("create table if not exists users " +
+                    "(id Integer auto_increment unique not null, " +
+                    "name varchar (255), " +
+                    "lastName varchar (255), " +
+                    "age int, " +
+                    "primary key (id))")) {
             statement.execute();
             System.out.println("Таблица готова.");
         } catch (SQLException e) {
@@ -40,11 +40,14 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement statement = util.connect()
                 .prepareStatement("insert into users (name, lastName, age) values (?, ?, ?)")) {
+
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setInt(3, age);
             statement.executeUpdate();
+
             ResultSet test = statement.executeQuery("select * from users where name = '" + name + "'");
+
             while (test.next()) {
                 System.out.printf("Пользователь с именем %s %s успешно добавлен\n", test.getString("name"), test.getString("lastName"));
             }
