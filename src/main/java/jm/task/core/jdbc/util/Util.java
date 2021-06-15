@@ -1,14 +1,11 @@
 package jm.task.core.jdbc.util;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.Scanner;
 
 public class Util {
     Connection connect;
