@@ -1,30 +1,36 @@
 package jm.task.core.jdbc.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class Util {
     Connection connect;
-
     public Connection connect() {
-        try {
-            Scanner s = new Scanner(new File("/home/nethunter/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/util/mysql_config.txt"));
-            while (s.hasNext()) {
-                String url = s.next() +
-                        ":" + s.next() +
-                        ":" + "//" + s.next() +
-                        ":" + s.next() +
-                        "/" + s.next();
-                String user = s.next();
-                String password = s.next();
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connect = DriverManager.getConnection(url, user, password);
-            }
-        } catch (FileNotFoundException | ClassNotFoundException | SQLException e) {
+        Properties property = new Properties();
+        try (FileInputStream input = new FileInputStream("src/main/Resources/mysql_config")) {
+
+            property.load(input);
+            String url = "" + property.getProperty("db.driver") +
+            property.getProperty("db.type") + property.getProperty("db.host") +
+            property.getProperty("db.port") +
+            property.getProperty("db.base") + "";
+
+            String user = property.getProperty("db.login");
+            String password = property.getProperty("db.password");
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            connect = DriverManager.getConnection(url, user, password);
+            System.out.println("==============================");
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            System.err.format("Ошибка подключения к базе данных %s", property.getProperty("db.base"));
             e.printStackTrace();
         }
         return connect;

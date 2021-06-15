@@ -1,0 +1,7 @@
+db.driver = jdbc:
+db.type = mysql:
+db.host = //localhost
+db.port = :3306
+db.base = /jm-base-module-one
+db.login = jm-admin
+db.password = !Jmc0urs3

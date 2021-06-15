@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    UserDao query = new UserDaoJDBCImpl();
+    private final UserDao query = new UserDaoJDBCImpl();
 
     public void createUsersTable() throws SQLException {
         query.createUsersTable();
@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
         query.dropUsersTable();
     }
 
-    public void saveUser(String firstName, String lastName, byte age) throws SQLException {
-        query.saveUser(firstName, lastName, age);
+    public void saveUser(String name, String lastName, byte age) throws SQLException {
+        query.saveUser(name, lastName, age);
     }
 
     public void removeUserById(long id) throws SQLException {
