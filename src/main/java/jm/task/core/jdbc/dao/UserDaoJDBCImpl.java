@@ -39,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement statement = util.connect()
-                .prepareStatement("insert into users (name, lastName, age) values (?, ?, ?)")) {
+            .prepareStatement("insert into users (name, lastName, age) values (?, ?, ?)")) {
 
             statement.setString(1, name);
             statement.setString(2, lastName);
@@ -53,7 +53,7 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
             System.err.format("Упсс...\nПохоже пользователь %s %s не был добавлен.\nSQL ERROR: %s\n",
-                    name, lastName, e.getSQLState());
+                name, lastName, e.getSQLState());
             e.printStackTrace();
         }
     }
@@ -65,7 +65,7 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Пользователь удален\n");
         } catch (SQLException e) {
             System.err.format("Мы не уверены, но кажется id c номером %d в базе данных нет.\nSQL ERROR: %s\n",
-                    id, e.getSQLState());
+                id, e.getSQLState());
             e.printStackTrace();
         }
     }
