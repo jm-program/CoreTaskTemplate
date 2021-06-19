@@ -17,4 +17,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     void cleanUsersTable() throws SQLException;
+
+    void updateUser(long id, String name, String lastName, byte age);
 }

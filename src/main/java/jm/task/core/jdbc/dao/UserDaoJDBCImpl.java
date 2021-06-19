@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.SqlQuery;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import java.sql.*;
@@ -7,80 +8,155 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private static Util util = new Util();
-    private static Connection connection;
-    private static final String CREATE_TABLE_SQL_REQUEST = "CREATE TABLE IF NOT EXISTS users " +
-            "(id BIGINT AUTO_INCREMENT UNIQUE NOT NULL, " +
-            "name VARCHAR(45), " +
-            "lastName VARCHAR(45), " +
-            "age INT, " +
-            "PRIMARY KEY (id))";
-    private static final String DROP_SQL_REQUEST = "DROP TABLE IF EXISTS users CASCADE";
-    private static final String INSERT_SQL_REQUEST = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
-    private static final String SELECT_ALL_USERS_SQL_REQUEST = "SELECT * FROM users";
-    private static final String DELETE_USER_SQL_REQUEST =  "DELETE FROM users WHERE id = ?";
-    private static final String TRUNCATE_TABLE_SQL_REQUEST = "TRUNCATE TABLE users";
+
+    private static String CREATE_TABLE = SqlQuery.CREATE.toString();
+    private static String DROP_TABLE = SqlQuery.DROP.toString();
+    private static String TRUNCATE_TABLE = SqlQuery.TRUNCATE.toString();
+    private static String SELECT_ALL = SqlQuery.SELECT.toString();
+    private static String SELECT_USER = SqlQuery.SELECT_USER.toString();
+    private static String SELECT_USER_ID = SqlQuery.SELECT_BY_ID.toString();
+    private static String INSERT_USER = SqlQuery.INSERT.toString();
+    private static String UPDATE_USER = SqlQuery.UPDATE_USER.toString();
+    private static String DELETE_USER = SqlQuery.DELETE.toString();
 
     public UserDaoJDBCImpl() {
-
     }
 
+    @Override
     public void createUsersTable() {
-        connection = util.connect();
+        Connection connection = Util.connect();
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(CREATE_TABLE_SQL_REQUEST);
+            statement.executeUpdate(CREATE_TABLE);
             connection.close();
         } catch (SQLException e) {
             e.getSQLState();
         }
     }
 
+    @Override
     public void dropUsersTable() {
-        connection = util.connect();
+        Connection connection = Util.connect();
         try (Statement statement = connection.createStatement()) {
-            statement.execute(DROP_SQL_REQUEST);
+            statement.execute(DROP_TABLE);
             connection.close();
         } catch (SQLException e) {
             e.getSQLState();
         }
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
-        connection = util.connect();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL_REQUEST)) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setInt(3, age);
-            preparedStatement.executeUpdate();
+        Connection connection = Util.connect();
+        PreparedStatement pstm = null;
+        try {
+            pstm = connection.prepareStatement(SELECT_USER);
+            pstm.setString(1, name);
+            pstm.setString(2, lastName);
+            pstm.setByte(3, age);
+            ResultSet result = pstm.executeQuery();
+            if (result.next()) {
+                System.err.print("\nТакой пользователь уже существует.");
+                pstm.close();
+            } else {
+                pstm = connection.prepareStatement(INSERT_USER);
+                pstm.setString(1, name);
+                pstm.setString(2, lastName);
+                pstm.setByte(3, age);
+                int i = pstm.executeUpdate();
+                if (i > 0) {
+                    System.out.printf("\nПользователь  %s %s добавлен в таблицу.\n", lastName, name);
+                } else {
+                    System.err.println("\nНе удалось добавить пользователя.");
+                }
+                pstm.close();
+            }
             connection.close();
-            System.out.printf("Пользователь %s %s успешно добавлен\n", lastName, name);
         } catch (SQLException e) {
-            e.getSQLState();
+            e.printStackTrace();
         }
     }
 
+    @Override
     public void removeUserById(long id) {
-        connection = util.connect();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_SQL_REQUEST)) {
-            preparedStatement.executeUpdate();
+        Connection connection = Util.connect();
+        PreparedStatement pstm = null;
+        try {
+            pstm = connection.prepareStatement(SELECT_USER_ID);
+            pstm.setLong(1, id);
+            ResultSet result = pstm.executeQuery();
+            if (result.next()) {
+                String name = result.getString("name");
+                String lastName = result.getString("lastName");
+                pstm = connection.prepareStatement(DELETE_USER);
+                pstm.setLong(1, id);
+                int i = pstm.executeUpdate();
+                if (i > 0) {
+                    System.out.printf("\nПользователь %s %s успешно удален\n", lastName, name);
+                }
+            } else {
+                System.err.println("Пользователя с таким ID не существует.");
+            }
+            pstm.close();
             connection.close();
         } catch (SQLException e) {
             e.getSQLState();
         }
     }
 
+
+    public void updateUser(long id, String name, String lastName, byte age) {
+        Connection connection = Util.connect();
+        PreparedStatement pstm = null;
+        try {
+            connection.setAutoCommit(false);
+            pstm = connection.prepareStatement(SELECT_USER_ID);
+            pstm.setLong(1, id);
+            ResultSet response = pstm.executeQuery();
+            if (response.next()) {
+                String oldUserName = response.getString("name");
+                String oldUserLastName = response.getString("lastname");
+                pstm = connection.prepareStatement(UPDATE_USER);
+                pstm.setString(1, name);
+                pstm.setString(2, lastName);
+                pstm.setByte(3, age);
+                pstm.setLong(4, id);
+                int i = pstm.executeUpdate();
+                connection.commit();
+                if (i > 0) {
+                    System.out.printf("Данные пользователя %s %s успешно изменены.", oldUserLastName, oldUserName);
+                    System.out.printf("\nТекущие данные пользователя с id %d:" +
+                            "\nФамилия: %s Имя: %s, возраст: %d.\n", id, lastName, name, age);
+                    connection.close();
+                } else {
+                    System.err.println("\nНе удалось обновить данные пользователя.");
+                    connection.close();
+                }
+            }
+        } catch (SQLException e) {
+            try {
+                if (connection != null) {
+                    System.err.print("Выполняется откат транзакции");
+                    connection.rollback();
+                }
+            } catch (SQLException throwables) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<User> all = new ArrayList<>();
-        connection = util.connect();
+        Connection connection = Util.connect();
         try (Statement statement = connection.createStatement()) {
-            ResultSet response = statement.executeQuery(SELECT_ALL_USERS_SQL_REQUEST);
+            ResultSet response = statement.executeQuery(SELECT_ALL);
             while (response.next()) {
-                User users = new User();
-                users.setId(response.getLong("id"));
-                users.setName(response.getString("name"));
-                users.setLastName(response.getString("lastName"));
-                users.setAge((byte)response.getInt("age"));
-                all.add(users);
+                User user = new User();
+                user.setId(response.getLong("id"));
+                user.setName(response.getString("name"));
+                user.setLastName(response.getString("lastName"));
+                user.setAge(response.getByte("age"));
+                all.add(user);
             }
             connection.close();
         } catch (SQLException e) {
@@ -89,10 +165,11 @@ public class UserDaoJDBCImpl implements UserDao {
         return all;
     }
 
+    @Override
     public void cleanUsersTable() {
-        connection = util.connect();
+        Connection connection = Util.connect();
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(TRUNCATE_TABLE_SQL_REQUEST);
+            statement.executeUpdate(TRUNCATE_TABLE);
             connection.close();
         } catch (SQLException e) {
             e.getSQLState();

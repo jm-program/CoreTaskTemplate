@@ -14,6 +14,8 @@ public interface UserDao {
 
     void removeUserById(long id) throws SQLException;
 
+    void updateUser(long id, String name, String lastName, byte age);
+
     List<User> getAllUsers();
 
     void cleanUsersTable() throws SQLException;
