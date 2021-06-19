@@ -10,23 +10,48 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        UserService service2 = new UserServiceImpl();
         UserService service = new UserServiceImpl();
-
+        UserService service2 = new UserServiceHibernateImpl();
         Connection connection = Util.connect();
         Util.printConnectionInfo(connection);
 
-        System.out.println("Создаем таблицу пользователей...");
-        service2.createUsersTable();
-
+        service.createUsersTable();
+        getUsers(service);
         System.out.println("\nДобавляем пользователей...");
-        service2.saveUser("Тимур", "Батрутдинов", (byte) 38);
-        service2.saveUser("Гарик", "Мартиросян", (byte) 44);
-        service2.saveUser("Гарик", "Мартиросян", (byte) 44);
-        service2.saveUser("Павел", "Воля", (byte) 40);
-        service2.saveUser("Гарик", "Харламов", (byte) 44);
-        service2.saveUser("Семен", "Слепаков", (byte) 41);
+        service.saveUser("Тимур", "Батрутдинов", (byte) 38);
+        service.saveUser("Гарик", "Мартиросян", (byte) 44);
+        service.saveUser("Гарик", "Мартиросян", (byte) 44);
+        service.saveUser("Павел", "Воля", (byte) 40);
+        service.saveUser("Гарик", "Харламов", (byte) 44);
+        service.saveUser("Семен", "Слепаков", (byte) 41);
         System.out.println();
+        getUsers(service);
+
+        System.out.print("\nУдаляем пользователя с номером id 3");
+        service2.removeUserById(3);
+        getUsers(service);
+
+        System.out.println("\nМеняем данные пользователя с номером id 4");
+        service2.updateUser(4, "Нурлан", "Сабуров", (byte) 36);
+        getUsers(service);
+
+        System.out.println("\nОчищаем и удаляем таблицу пользователей");
+        service.cleanUsersTable();
+        getUsers(service);
+        service.dropUsersTable();
+
+
+
+
+        service2.createUsersTable();
+        getUsers(service2);
+        System.out.println("Добавляем пользователей...");
+        service2.saveUser("Тимур", "Батрутдинов", (byte) 44);
+        service2.saveUser("Гарик", "Мартиросян", (byte) 44);
+        service2.saveUser("Гарик", "Харламов", (byte) 44);
+        service2.saveUser("Павел", "Воля", (byte) 40);
+        service2.saveUser("Гарик", "Мартиросян", (byte) 44);
+        service2.saveUser("Семен", "Слепаков", (byte) 41);
         getUsers(service2);
 
         System.out.print("\nУдаляем пользователя с номером id 3");
@@ -37,40 +62,18 @@ public class Main {
         service2.updateUser(4, "Нурлан", "Сабуров", (byte) 36);
         getUsers(service2);
 
-        System.out.println("\nОчищаем и удаляем таблицу пользователей");
-        service2.cleanUsersTable();
-        service2.dropUsersTable();
-
-        System.out.println("Создаем таблицу пользователей...");
-        service.createUsersTable();
-
-        System.out.println("Добавляем пользователей...");
-        service.saveUser("Тимур", "Батрутдинов", (byte) 44);
-        service.saveUser("Гарик", "Мартиросян", (byte) 44);
-        service.saveUser("Гарик", "Харламов", (byte) 44);
-        service.saveUser("Павел", "Воля", (byte) 40);
-        service.saveUser("Гарик", "Мартиросян", (byte) 44);
-        service.saveUser("Семен", "Слепаков", (byte) 41);
-
-        List<User> users = service.getAllUsers();
-        System.out.printf("%-9s%s\n", "", "ТАБЛИЦА ПОЛЬЗОВАТЕЛЕЙ");
-        System.out.printf("%-1s%-6s%-10s%-15s%s\n", "", "ID", "ИМЯ", "ФАМИЛМЯ", "ВОЗРАСТ");
-        System.out.println("----:-------:-----------------:--------:");
-        for (User user : users) {
-            System.out.println(user);
-        }
-
         System.out.println("Очищаем и удаляем таблицу пользователей");
-        service.cleanUsersTable();
-        service.dropUsersTable();
+        service2.cleanUsersTable();
+        getUsers(service2);
+        service2.dropUsersTable();
     }
 
     private static void getUsers(UserService service) {
         List<User> users = service.getAllUsers();
-        if (service.getAllUsers().size() == 0) {
-            System.out.printf("\nТекущее количество пользователей пользователей: %d\n", service.getAllUsers().size());
+        if (users.isEmpty()) {
+            System.out.printf("\nТекущее количество пользователей пользователей: %d\n", 0);
         } else {
-            System.out.printf("\nТекущее количество пользователей пользователей: %d\n", service.getAllUsers().size());
+            System.out.printf("\nТекущее количество пользователей пользователей: %d\n", users.size());
             System.out.printf("%-9s%s\n", "", "ТАБЛИЦА ПОЛЬЗОВАТЕЛЕЙ");
             System.out.printf("%-1s%-6s%-10s%-15s%s\n", "", "ID", "ИМЯ", "ФАМИЛМЯ", "ВОЗРАСТ");
             System.out.println("----:-------:-----------------:--------:");

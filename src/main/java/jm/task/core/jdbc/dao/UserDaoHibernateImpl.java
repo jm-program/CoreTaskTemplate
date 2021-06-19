@@ -71,7 +71,7 @@ public class UserDaoHibernateImpl implements UserDao {
                          .setParameter(3, age);
                     query.executeUpdate();
                     session.getTransaction().commit();
-                    System.out.println("Пользователь успешно добавлен.");
+                    System.out.printf("\nПользователь %s %s успешно добавлен.", lastName, name);
                 } else {
                     System.err.println("\nТакой пользователь уже существует.");
                 }
