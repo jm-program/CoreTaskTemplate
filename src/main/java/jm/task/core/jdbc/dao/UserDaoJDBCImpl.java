@@ -1,7 +1,6 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.AdapterDB;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    private AdapterDB util;
+    private Util util;
     private Statement statement;
     private Connection connection;
     private PreparedStatement pstmt;
