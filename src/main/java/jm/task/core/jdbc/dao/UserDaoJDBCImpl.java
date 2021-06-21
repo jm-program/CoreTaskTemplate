@@ -90,11 +90,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 pstm = connection.prepareStatement(DELETE_USER);
                 pstm.setLong(1, id);
                 int i = pstm.executeUpdate();
-                if (i > 0) {
-                    System.out.printf("\nПользователь %s %s успешно удален\n", lastName, name);
-                }
+                String answer = i > 0 ? String.format("\nПользователь %s %s успешно удален\n", lastName, name)
+                        : "Пользователя с таким ID не существует.";
+                System.out.println(answer);
             } else {
-                System.err.println("Пользователя с таким ID не существует.");
+                System.out.println("Ошибка соединения");
             }
             pstm.close();
             connection.close();
@@ -122,15 +122,14 @@ public class UserDaoJDBCImpl implements UserDao {
                 pstm.setLong(4, id);
                 int i = pstm.executeUpdate();
                 connection.commit();
-                if (i > 0) {
-                    System.out.printf("Данные пользователя %s %s успешно изменены.", oldUserLastName, oldUserName);
-                    System.out.printf("\nТекущие данные пользователя с id %d:" +
-                            "\nФамилия: %s Имя: %s, возраст: %d.\n", id, lastName, name, age);
-                    connection.close();
-                } else {
-                    System.err.println("\nНе удалось обновить данные пользователя.");
-                    connection.close();
-                }
+                String answer = i > 0 ? String.format("Данные пользователя %s %s успешно изменены." +
+                        "\nТекущие данные пользователя с id %d:\nФамилия: %s Имя: %s, возраст: %d.\n",
+                        oldUserLastName, oldUserName, id, lastName, name, age)
+                        : "\nНе удалось обновить данные пользователя.";
+                System.out.println(answer);
+                connection.close();
+            } else {
+                System.out.println("Ошибка соединения");
             }
         } catch (SQLException e) {
             try {
