@@ -46,8 +46,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) { //Сохранить пользователя
         try {
-            pstmt = connection.prepareStatement("insert into user (name, lastName, age)" +
-                    " values (?, ?, ?)");
+            pstmt = connection.prepareStatement("INSERT INTO user (name, lastName, age)" +
+                    " VALUES (?, ?, ?)");
             pstmt.setString(1, name);
             pstmt.setString(2, lastName);
             pstmt.setInt(3, age);
@@ -61,7 +61,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try {
-            pstmt = connection.prepareStatement("delete from user where id = ?");
+            pstmt = connection.prepareStatement("DELETE FROM user WHERE id = ?");
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> list = new ArrayList<>();
         int count = 0;
         try {
-            pstmt = connection.prepareStatement("select * from user");
+            pstmt = connection.prepareStatement("SELECT * FROM user");
             //pstmt.setString(1,"user");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

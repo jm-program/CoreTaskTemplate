@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public List<User> getAllUsers() {
         Session session = Util.getSessionFactory().openSession();
         //  List<User> users = session.createSQLQuery("SELECT * FROM user").addEntity(User.class).list(); // SQL
-        Query query = session.createQuery("from User"); // HQL место таблицы указывается имя класса
+        Query query = session.createQuery("FROM User"); // HQL место таблицы указывается имя класса
         List<User> users = query.list();
         session.close();
         return users;
@@ -70,9 +71,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Session session = Util.getSessionFactory().openSession();
         Transaction t1 = session.beginTransaction();
-         session.createQuery("delete from User").executeUpdate(); // HQL запрос
+         session.createQuery("DELETE FROM User").executeUpdate(); // HQL запрос
 //        for (User user : getAllUsers()) {
-//            session.delete(user); // CRITERIA API не проходит проверку почему-то =( ?
+//            session.delete(user); // CRITERIA API
 //        }
         t1.commit();
         session.close();
