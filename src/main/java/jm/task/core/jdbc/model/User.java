@@ -1,21 +1,18 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import javax.persistence.*;
+import java.io.Serializable;
+@Entity
 @Table
-public class User {
+public class User implements Serializable {
+
     @Id
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
     private String lastName;
 
-    @Column
     private Byte age;
 
     public User() {
@@ -58,5 +55,12 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-1s%-5d%-10s%-17s %d\n" +
+        "----:-------:-----------------:--------:",
+        "", this.id, this.name, this.lastName, this.age);
     }
 }
