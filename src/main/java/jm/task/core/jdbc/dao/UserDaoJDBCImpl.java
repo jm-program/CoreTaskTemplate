@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    static int ids = 0;
-    Connection connection;
+    private Connection connection;
 
     public UserDaoJDBCImpl() {
         connection = Util.util();
@@ -18,19 +17,17 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try {
-            connection.createStatement().execute("CREATE TABLE `newBD`.`users` " +
+            connection.createStatement().execute("CREATE TABLE IF NOT EXISTS `newBD`.`users` " +
                     "(`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NOT NULL," +
                     "`lastName` VARCHAR(45) NOT NULL,`age` INT NOT NULL," +
                     " PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);");
-            //connection.close();
         } catch (SQLException throwables) {
         }
     }
 
     public void dropUsersTable() {
         try {
-            connection.createStatement().execute("DROP TABLE users");
-            //connection.close();
+            connection.createStatement().execute("DROP TABLE if EXISTS users");
         } catch (SQLException throwables) {
         }
     }
@@ -38,13 +35,11 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (?,?,?,?)");
-            preparedStatement.setInt(1, ids);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, lastName);
-            preparedStatement.setInt(4, age);
+            preparedStatement = connection.prepareStatement("INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setInt(3, age);
             preparedStatement.execute();
-            ids++;
             preparedStatement.close();
         } catch (SQLException throwables) {
         }
@@ -82,7 +77,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try {
             connection.createStatement().execute("delete from users");
-            //connection.close();
         } catch (SQLException throwables) {
         }
     }
