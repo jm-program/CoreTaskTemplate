@@ -1,7 +1,9 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
+
 import static jm.task.core.jdbc.util.Util.getConnection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +14,7 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
     }
+
     public void createUsersTable() {
         try {
             Statement statement = getConnection().createStatement();
@@ -28,7 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        try (Statement statement = getConnection().createStatement()){
+        try (Statement statement = getConnection().createStatement()) {
             statement.execute("drop table user;");
         } catch (SQLException ignored) {
         }
@@ -36,12 +39,12 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         String sql = "INSERT INTO my_db_test.user (name, lastName, age) VALUES (?, ?, ?);";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)){
-            statement.setString(1,name);
-            statement.setString(2,lastName);
-            statement.setByte(3,age);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, name);
+            statement.setString(2, lastName);
+            statement.setByte(3, age);
             statement.executeUpdate();
-            System.out.println("User с именем – "+ name + " добавлен в базу данных");
+            System.out.println("User с именем – " + name + " добавлен в базу данных");
 
         } catch (SQLException e) {
             e.getMessage();
@@ -51,8 +54,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         String sql = "DELETE FROM my_db_test.user WHERE id = ?;";
-        try(PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setLong(1,id);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
@@ -63,9 +66,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         String sql = "SELECT * FROM user;";
-        try(Statement statement = getConnection().createStatement()) {
+        try (Statement statement = getConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
@@ -85,15 +88,15 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         int i = 0;
         String sql = "SELECT * FROM user;";
-        try(Statement statement = getConnection().createStatement()) {
+        try (Statement statement = getConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 i++;
-               PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE\n" +
-                       "FROM my_db_test.user\n" +
-                       "WHERE id = ?;");
-               preparedStatement.setLong(1,i);
-               preparedStatement.executeUpdate();
+                PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE\n" +
+                        "FROM my_db_test.user\n" +
+                        "WHERE id = ?;");
+                preparedStatement.setLong(1, i);
+                preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
             e.getMessage();
