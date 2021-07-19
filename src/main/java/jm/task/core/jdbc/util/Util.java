@@ -52,6 +52,7 @@ public class Util {
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(User.class);
 
+
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
 
