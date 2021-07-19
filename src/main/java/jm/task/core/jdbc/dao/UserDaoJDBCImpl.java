@@ -38,8 +38,11 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO my_db_test.user (name, lastName, age) VALUES ("+name+", "+lastName+", "+age+");";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement statement = getConnection().prepareStatement("INSERT INTO my_db_test.user" +
+                " (name, lastName, age) VALUES (?, ?, ?);")) {
+            statement.setString(1, name);
+            statement.setString(2, lastName);
+            statement.setByte(3, age);
             statement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
 
@@ -50,8 +53,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE FROM my_db_test.user WHERE id = "+id+";";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement statement = getConnection().prepareStatement("DELETE FROM my_db_test.user WHERE id = ?;")) {
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
@@ -61,9 +64,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM user;";
         try (Statement statement = getConnection().createStatement()) {
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user;");
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
@@ -83,17 +85,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         int i = 0;
-        String sql = "SELECT * FROM user;";
         try (Statement statement = getConnection().createStatement()) {
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                i++;
-                PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE\n" +
-                        "FROM my_db_test.user\n" +
-                        "WHERE id = ?;");
-                preparedStatement.setLong(1, i);
-                preparedStatement.executeUpdate();
-            }
+            statement.executeQuery("TRUNCATE TABLE user");
         } catch (SQLException e) {
             e.getMessage();
             System.err.println("Не удалось очистить таблицу");
