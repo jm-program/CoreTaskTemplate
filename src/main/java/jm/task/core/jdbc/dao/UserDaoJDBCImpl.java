@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    //private Connection connection;
+    private Connection connection;
 
     public UserDaoJDBCImpl() {
-
+        connection = Util.util();
     }
 
     public void createUsersTable() {
@@ -26,6 +26,14 @@ public class UserDaoJDBCImpl implements UserDao {
                     " PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);");
             connection.commit();
         } catch (SQLException throwables) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
     }
 
@@ -35,6 +43,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().execute("DROP TABLE if EXISTS users");
             connection.commit();
         } catch (SQLException throwables) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
     }
 
@@ -50,6 +66,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.commit();
             preparedStatement.close();
         } catch (SQLException throwables) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
     }
 
@@ -63,6 +87,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.commit();
             preparedStatement.close();
         } catch (SQLException throwables) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
     }
 
@@ -82,6 +114,14 @@ public class UserDaoJDBCImpl implements UserDao {
             }
             preparedStatement.close();
         } catch (SQLException throwables) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
         return users;
     }
@@ -92,7 +132,14 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().execute("delete from users");
             connection.commit();
         } catch (SQLException throwables) {
-
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throwables.printStackTrace();
         }
     }
 }
