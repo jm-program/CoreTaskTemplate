@@ -3,10 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +15,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        try {
+        try(Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
-            connection.createStatement().execute("CREATE TABLE IF NOT EXISTS `newBD`.`users` " +
+            statement.execute("CREATE TABLE IF NOT EXISTS `newBD`.`users` " +
                     "(`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NOT NULL," +
                     "`lastName` VARCHAR(45) NOT NULL,`age` INT NOT NULL," +
                     " PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);");
@@ -38,9 +35,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        try {
+        try(Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
-            connection.createStatement().execute("DROP TABLE if EXISTS users");
+            statement.execute("DROP TABLE if EXISTS users");
             connection.commit();
         } catch (SQLException throwables) {
             if (connection != null) {
@@ -122,9 +119,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try {
+        try(Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
-            connection.createStatement().execute("delete from users");
+            statement.execute("delete from users");
             connection.commit();
         } catch (SQLException throwables) {
             if (connection != null) {
