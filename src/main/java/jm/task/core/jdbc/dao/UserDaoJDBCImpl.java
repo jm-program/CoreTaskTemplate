@@ -18,7 +18,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        try(Connection connection = Util.util()) {
+        try {
             connection.setAutoCommit(false);
             connection.createStatement().execute("CREATE TABLE IF NOT EXISTS `newBD`.`users` " +
                     "(`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NOT NULL," +
@@ -38,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        try(Connection connection = Util.util()) {
+        try {
             connection.setAutoCommit(false);
             connection.createStatement().execute("DROP TABLE if EXISTS users");
             connection.commit();
@@ -55,16 +55,14 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        PreparedStatement preparedStatement;
-        try (Connection connection = Util.util()){
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement("INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)")){
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement("INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)");
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
             preparedStatement.execute();
             connection.commit();
-            preparedStatement.close();
         } catch (SQLException throwables) {
             if (connection != null) {
                 try {
@@ -78,14 +76,13 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        PreparedStatement preparedStatement;
-        try (Connection connection = Util.util()){
+
+        try (PreparedStatement preparedStatement
+                     = connection.prepareStatement("delete from users WHERE EXISTS id = ?")){
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement("delete from users WHERE EXISTS id = ?");
             preparedStatement.setInt(1, (int) id);
             preparedStatement.executeUpdate();
             connection.commit();
-            preparedStatement.close();
         } catch (SQLException throwables) {
             if (connection != null) {
                 try {
@@ -99,11 +96,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        PreparedStatement preparedStatement;
+
         List<User> users = new ArrayList<>();
-        try (Connection connection = Util.util()){
+        try (PreparedStatement preparedStatement = connection.prepareStatement("select * from users")){
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement("select * from users");
             ResultSet resultSet = preparedStatement.executeQuery();
             connection.commit();
             while (resultSet.next()){
@@ -112,7 +108,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId((long) resultSet.getInt("id"));
                 users.add(user);
             }
-            preparedStatement.close();
         } catch (SQLException throwables) {
             if (connection != null) {
                 try {
@@ -127,7 +122,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try (Connection connection = Util.util()){
+        try {
             connection.setAutoCommit(false);
             connection.createStatement().execute("delete from users");
             connection.commit();
