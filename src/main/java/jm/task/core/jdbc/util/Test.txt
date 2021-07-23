@@ -2,3 +2,6 @@ Privet
 Kak dela
 Ok
 no good
+
+ok
+new string
