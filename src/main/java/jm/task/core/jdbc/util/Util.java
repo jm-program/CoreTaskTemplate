@@ -16,6 +16,7 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/newBD";//хост такой вот
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    String s = "proba";
 
     public static Connection util(){
         Connection connection = null;// реализуйте настройку соеденения с БД
