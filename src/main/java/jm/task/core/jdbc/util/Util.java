@@ -16,7 +16,7 @@ public class Util {
         try {
             Class.forName(BD_DRIVER);
             con = DriverManager.getConnection(BD_URL, BD_USER, BD_PASSWORD);
-            System.out.println("Соединение установленно");
+            //System.out.println("Соединение установленно");
         } catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
             System.out.println("Ошибка соединения");
