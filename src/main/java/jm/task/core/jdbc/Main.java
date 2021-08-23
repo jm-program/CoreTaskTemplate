@@ -15,7 +15,7 @@ public class Main {
         serv.saveUser("Petr", "Petrov", (byte) 24);
         serv.saveUser("Igor", "Ivanov", (byte) 35);
         serv.saveUser("Ivan", "Sidorov", (byte) 30);
-        serv.saveUser("Roman", "Romanov", (byte) 40);
+        serv.saveUser("Alexsander", "Romanov", (byte) 40);
 
         List<User> users = serv.getAllUsers();
         for(User u: users){

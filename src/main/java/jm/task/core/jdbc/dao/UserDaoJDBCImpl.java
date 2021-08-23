@@ -19,8 +19,13 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         String sql = "CREATE TABLE users (ID BIGINT NOT NULL AUTO_INCREMENT, NAME VARCHAR(100) NOT NULL, " +
                 "LASTNAME VARCHAR(100) NOT NULL, AGE INT NOT NULL, PRIMARY KEY (ID))";
         try {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
+
             statement = connection.createStatement();
             statement.executeUpdate(sql);
+
+            connection.commit();
         } catch (SQLException e){
             System.out.println("Таблица уже существует");
             //e.printStackTrace();

@@ -11,6 +11,7 @@ public class Util {
     private static final String BD_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 
+
     public Connection setConnection() {
         Connection con = null;
         try {
@@ -23,4 +24,6 @@ public class Util {
         }
         return con;
     }
+
+
 }
