@@ -1,58 +1,40 @@
 package jm.task.core.jdbc.service;
 
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    static Connection connection = Util.getConnection();
+    UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
 
     public void createUsersTable() {
-        String createTableUser = "CREATE TABLE `preprojectjm`.`user` (\n" +
-                "  `id` INT(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  `name` VARCHAR(50) NULL,\n" +
-                "  `last_name` VARCHAR(50) NULL,\n" +
-                "  `age` INT(4) NULL,\n" +
-                "  PRIMARY KEY (`id`));";
-        try (
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(createTableUser);
-            System.out.println("Таблица user добавленв");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        userDaoJDBC.createUsersTable();
+        System.out.println("Таблица user добавленв");
     }
 
     public void dropUsersTable() {
-        final String sql = "DROP TABLE user";
-        try (
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sql);
-            System.out.println("Таблица user удалена");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("что-то пошло не так");
-        }
+        userDaoJDBC.dropUsersTable();
+        System.out.println("Таблица user удалена");
     }
 
     public void saveUser(String name, String lastName, byte age) {
-
+        userDaoJDBC.saveUser(name, lastName, age);
+        System.out.printf("User с именем %s добавлен в базу данных", name);
     }
 
     public void removeUserById(long id) {
-
+        userDaoJDBC.removeUserById(id);
+        System.out.printf("пользователь по id=%d удален", id);
     }
 
     public List<User> getAllUsers() {
-        return null;
+        List<User> allUsers = userDaoJDBC.getAllUsers();
+        return allUsers;
     }
 
     public void cleanUsersTable() {
-
+        userDaoJDBC.cleanUsersTable();
+        System.out.println("Данные очищены");
     }
 }
