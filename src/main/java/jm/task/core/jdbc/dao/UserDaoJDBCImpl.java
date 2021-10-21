@@ -2,6 +2,7 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
@@ -9,14 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private UserService userService;
-
-    public UserDaoJDBCImpl(UserService userService) {
-        this.userService = userService;
-    }
 
     public UserDaoJDBCImpl() {
-
     }
 
     public void createUsersTable() {
@@ -36,9 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 0) {
                 System.out.println("Таблица пользователей создана успешно!");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -57,9 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 0) {
                 System.out.println("Таблица пользователей успешно удалена!");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -79,10 +70,8 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 1) {
                 System.out.println("Пользователь " + name + " добавлен в базу данных");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -102,10 +91,8 @@ public class UserDaoJDBCImpl implements UserDao {
             } else {
                 System.out.println(String.format("Пользователь с указанным id = %d не найден.", id));
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -126,10 +113,8 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId(resultSet.getLong("id"));
                 listUsers.add(user);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
         return listUsers;
     }
@@ -143,15 +128,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 System.exit(0);
             }
             Statement statement = connection.createStatement();
-            String sql = "TRUNCATE TABLE Users;";
-            int result = statement.executeUpdate(sql);
+            int result = statement.executeUpdate("TRUNCATE TABLE Users;");
             if (result == 0) {
                 System.out.println("Таблица Users успешно очищена.");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
 
     }

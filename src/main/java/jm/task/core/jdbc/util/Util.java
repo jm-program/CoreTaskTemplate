@@ -12,7 +12,7 @@ public class Util {
         String hostName = "localhost";
         String dbName = "base_for_work";
         String userName = "aadmin";
-        String password = "Password!";
+        String password = "123!789q654";
 
         return getMySQLConnection(hostName, dbName, userName, password);
     }
