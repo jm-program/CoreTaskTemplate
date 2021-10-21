@@ -12,7 +12,7 @@ public class Util {
         String hostName = "localhost";
         String dbName = "base_for_work";
         String userName = "aadmin";
-        String password = "123!789q654";
+        String password = "PassWord!";
 
         return getMySQLConnection(hostName, dbName, userName, password);
     }
@@ -20,9 +20,7 @@ public class Util {
     public static Connection getMySQLConnection(String hostName, String dbName,
                                                 String userName, String password) throws SQLException, ClassNotFoundException {
         String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
-
-        Connection conn = DriverManager.getConnection(connectionURL, userName, password);
-        return conn;
+        return DriverManager.getConnection(connectionURL, userName, password);
     }
 
 }
