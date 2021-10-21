@@ -12,13 +12,13 @@ public class Util {
         String hostName = "localhost";
         String dbName = "base_for_work";
         String userName = "aadmin";
-        String password = "PassWord!";
+        String password = "123!789q654";
 
         return getMySQLConnection(hostName, dbName, userName, password);
     }
 
     public static Connection getMySQLConnection(String hostName, String dbName,
-                                                String userName, String password) throws SQLException, ClassNotFoundException {
+                                                String userName, String password) throws SQLException  {
         String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
         return DriverManager.getConnection(connectionURL, userName, password);
     }
