@@ -31,7 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 0) {
                 System.out.println("Таблица пользователей создана успешно!");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 0) {
                 System.out.println("Таблица пользователей успешно удалена!");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 1) {
                 System.out.println("Пользователь " + name + " добавлен в базу данных");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -91,7 +91,7 @@ public class UserDaoJDBCImpl implements UserDao {
             } else {
                 System.out.println(String.format("Пользователь с указанным id = %d не найден.", id));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -113,7 +113,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId(resultSet.getLong("id"));
                 listUsers.add(user);
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return listUsers;
@@ -132,7 +132,7 @@ public class UserDaoJDBCImpl implements UserDao {
             if (result == 0) {
                 System.out.println("Таблица Users успешно очищена.");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 

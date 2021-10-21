@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Util {
     // реализуйте настройку соеденения с БД
 
-    public static Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
+    public static Connection getMySQLConnection() throws SQLException {
 
         String hostName = "localhost";
         String dbName = "base_for_work";
