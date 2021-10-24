@@ -25,8 +25,8 @@ public class UserDaoJDBCImpl implements UserDao {
             Statement statement = connection.createStatement();
             int result = statement.executeUpdate("CREATE TABLE Users (" +
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                    "name varchar(50) NOT NULL," +
-                    "lastName varchar(50) NOT NULL," +
+                    "name varchar(255) NOT NULL," +
+                    "lastName varchar(255) NOT NULL," +
                     "age int NOT NULL);");
             if (result == 0) {
                 System.out.println("Таблица пользователей создана успешно!");
@@ -65,7 +65,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 System.exit(0);
             }
             Statement statement = connection.createStatement();
-//            String strResult = String.format("INSERT INTO Users SET name = '%s', lastName = '%s', age = %d;", name, lastName, age);
             int result = statement.executeUpdate(String.format("INSERT INTO Users SET name = '%s', lastName = '%s', age = %d;", name, lastName, age));
             if (result == 1) {
                 System.out.println("Пользователь " + name + " добавлен в базу данных");

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="base_for_work@localhost" uuid="20fc9a50-b39e-4a4b-a7d7-ab858fabcae6">
+    <data-source source="LOCAL" name="base_for_work@localhost" uuid="02c1dcc5-74a7-4c46-9f0f-a3d7decf9909">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/base_for_work</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
-      <driver-properties>
-        <property name="useSSL" value="FALSE" />
-      </driver-properties>
     </data-source>
   </component>
 </project>
