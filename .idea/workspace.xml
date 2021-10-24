@@ -75,7 +75,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.UserServiceTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jm.task.core.jdbc.Main" />
       <module name="TaskJDBC" />
@@ -111,8 +111,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.UserServiceTest" />

@@ -16,10 +16,8 @@ public class Main {
         userDaoHibernate.saveUser("Alena", "Tibrec", (byte)22);
         userDaoHibernate.saveUser("Gleb", "Kuchma", (byte)36);
         List<User> listUsers = userDaoHibernate.getAllUsers();
-//        System.out.println(listUsers);
-        listUsers.stream()
-                .forEach(System.out::println);
-//        userDaoHibernate.cleanUsersTable();
-//        userDaoHibernate.dropUsersTable();
+        System.out.println(listUsers);
+        userDaoHibernate.cleanUsersTable();
+        userDaoHibernate.dropUsersTable();
     }
 }
