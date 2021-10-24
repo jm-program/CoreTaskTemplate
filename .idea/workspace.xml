@@ -20,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="CoreTaskTemplate_114" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -130,7 +130,7 @@
       <workItem from="1635005028324" duration="2795000" />
       <workItem from="1635007895861" duration="232000" />
       <workItem from="1635008622231" duration="4930000" />
-      <workItem from="1635068376594" duration="8143000" />
+      <workItem from="1635068376594" duration="8452000" />
     </task>
     <task id="LOCAL-00001" summary="Закончил 1.1.4">
       <created>1635075027223</created>
@@ -160,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635076495822</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Закончил 1.1.4">
+      <created>1635076822324</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1635076822324</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,18 +186,33 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Закончил 1.1.4" />
     <MESSAGE value="Test" />
     <MESSAGE value="Закончил 1.1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Закончил 1.1.3" />
+    <MESSAGE value="Закончил 1.1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Закончил 1.1.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/model/User.java</url>
           <line>64</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/Main.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

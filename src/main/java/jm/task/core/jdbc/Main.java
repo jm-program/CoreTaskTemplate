@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        //This is a branch 114
+        //This is a branch 114*
         UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
         userDaoHibernate.createUsersTable();
         userDaoHibernate.saveUser("Vasily", "Petrov", (byte)48);
