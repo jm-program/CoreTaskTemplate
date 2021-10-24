@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71f1579e-cddc-42ad-b3ce-0129ff962a52" name="Changes" comment="" />
+    <list default="true" id="71f1579e-cddc-42ad-b3ce-0129ff962a52" name="Changes" comment="Revert &quot;1&quot;&#10;&#10;This reverts commit 983e3cfe">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/jm/task/core/jdbc/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/jm/task/core/jdbc/Main.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,7 +41,7 @@
       <map>
         <entry key="JPA Inspector" value="false" />
         <entry key="JPA Palette" value="false" />
-        <entry key="JPA Structure" value="false" />
+        <entry key="JPA Structure" value="true" />
       </map>
     </option>
   </component>
@@ -107,8 +111,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.UserServiceTest" />
@@ -130,7 +134,7 @@
       <workItem from="1635005028324" duration="2795000" />
       <workItem from="1635007895861" duration="232000" />
       <workItem from="1635008622231" duration="4930000" />
-      <workItem from="1635068376594" duration="8452000" />
+      <workItem from="1635068376594" duration="8143000" />
     </task>
     <task id="LOCAL-00001" summary="Закончил 1.1.4">
       <created>1635075027223</created>
@@ -160,14 +164,7 @@
       <option name="project" value="LOCAL" />
       <updated>1635076495822</updated>
     </task>
-    <task id="LOCAL-00005" summary="Закончил 1.1.4">
-      <created>1635076822324</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1635076822324</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,27 +180,19 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Закончил 1.1.4" />
     <MESSAGE value="Test" />
     <MESSAGE value="Закончил 1.1.3" />
-    <MESSAGE value="Закончил 1.1.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Закончил 1.1.4" />
+    <MESSAGE value="Revert &quot;1&quot;&#10;&#10;This reverts commit 983e3cfe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;1&quot;&#10;&#10;This reverts commit 983e3cfe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/model/User.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/Main.java</url>
           <line>12</line>
@@ -213,6 +202,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java</url>
           <line>41</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
