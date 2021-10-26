@@ -8,7 +8,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        //This is a branch 114*
         UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
         userDaoHibernate.createUsersTable();
         userDaoHibernate.saveUser("Vasily", "Petrov", (byte)48);
@@ -16,7 +15,7 @@ public class Main {
         userDaoHibernate.saveUser("Alena", "Tibrec", (byte)22);
         userDaoHibernate.saveUser("Gleb", "Kuchma", (byte)36);
         List<User> listUsers = userDaoHibernate.getAllUsers();
-        System.out.println(listUsers);
+        listUsers.forEach(System.out::println);
         userDaoHibernate.cleanUsersTable();
         userDaoHibernate.dropUsersTable();
     }

@@ -16,11 +16,21 @@ import java.util.Map;
 
 public class Util {
 
+    private static Util instance;
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
 
-    public static Connection getMySQLConnection() throws SQLException {
+    private Util() {
+    }
 
+    public static Util getInstance() {
+        if (instance == null) {
+            instance = new Util();
+        }
+        return instance;
+    }
+
+    public Connection getMySQLConnection() throws SQLException {
         String hostName = "localhost";
         String dbName = "base_for_work";
         String userName = "aadmin";
@@ -35,10 +45,7 @@ public class Util {
         return DriverManager.getConnection(connectionURL, userName, password);
     }
 
-
-
-    public static SessionFactory getSessionFactory() {
-
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
@@ -63,14 +70,14 @@ public class Util {
             } catch (Exception e) {
                 e.printStackTrace();
                 if (registry != null) {
-                    StandardServiceRegistryBuilder.destroy(registry);
+                    close();
                 }
             }
         }
         return sessionFactory;
     }
 
-    public static void close() {
+    public void close() {
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
         }
