@@ -15,8 +15,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS Users (" +
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                     "name varchar(255) NOT NULL," +
@@ -28,8 +28,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP TABLE IF EXISTS Users;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,8 +37,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("INSERT INTO Users SET name = '%s', lastName = '%s', age = %d;", name, lastName, age));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,8 +46,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("DELETE FROM Users where id = %d;", id));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,10 +56,10 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> listUsers = new ArrayList<>(0);
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Users;");
-            while(resultSet.next()) {
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM Users;")) {
+            while (resultSet.next()) {
                 User user = new User(resultSet.getString("name"),
                         resultSet.getString("lastName"),
                         resultSet.getByte("age"));
@@ -73,8 +73,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try (Connection connection = Util.getInstance().getMySQLConnection()){
-            Statement statement = connection.createStatement();
+        try (Connection connection = Util.getInstance().getMySQLConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate("TRUNCATE TABLE Users;");
         } catch (SQLException e) {
             e.printStackTrace();
