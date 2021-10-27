@@ -48,25 +48,10 @@ public class Util {
     public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-
-                Map<String, String> settings = new HashMap<>();
-                settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/base_for_work");
-                settings.put(Environment.USER, "aadmin");
-                settings.put(Environment.PASS, "Password!");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
-
-                registryBuilder.applySettings(settings);
-
-                registry = registryBuilder.build();
-
+                registry = new StandardServiceRegistryBuilder().configure().build();
                 MetadataSources sources = new MetadataSources(registry);
-                sources.addAnnotatedClass(User.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
-
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
-
             } catch (Exception e) {
                 e.printStackTrace();
                 if (registry != null) {
