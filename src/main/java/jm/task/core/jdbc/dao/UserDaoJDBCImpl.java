@@ -1,35 +1,119 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.util.Util;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+
+    Util conect = new Util();
+
+    public Connection connection = conect.getConnection();
+
     public UserDaoJDBCImpl() {
 
     }
 
     public void createUsersTable() {
+        Statement statement;
+        String sql = "create table if not exists minions\n" +
+                "(\n" +
+                "\tid int auto_increment,\n" +
+                "\tname varchar(50) null,\n" +
+                "\tlastName varchar(50) null,\n" +
+                "\tage int null,\n" +
+                "\tconstraint minions_pk\n" +
+                "\t\tprimary key (id)\n" +
+                ");";
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void dropUsersTable() {
+        Statement statement;
+        String dropSql = "drop table if exists minions";
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(dropSql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void saveUser(String name, String lastName, byte age) {
+        PreparedStatement preparedStatement;
+        String userSql = "insert into minions (name, lastname, age) values (?, ?, ?)";
+        try {
+            preparedStatement = connection.prepareStatement(userSql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
+            preparedStatement.executeUpdate();
+            System.out.println("Миньён c именем " + name + " добавлен в таблицу");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
     public void removeUserById(long id) {
+        PreparedStatement preparedStatement;
+        String removeSql = "delete from minions where id = ?";
+        try {
+            preparedStatement = connection.prepareStatement(removeSql);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            System.out.println("Миньён под номером :" + id + " был удален.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public List<User> getAllUsers() {
-        return null;
+
+        List<User> list = new ArrayList<>();
+        Statement statement;
+        String allSql = "select * from minions";
+        try {
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(allSql);
+            while (result.next()) {
+                User user = new User();
+                user.setId(result.getLong("id"));
+                user.setName(result.getString("name"));
+                user.setLastName(result.getString("lastName"));
+                user.setAge(result.getByte("age"));
+                list.add(user);
+            }
+            System.out.println(list);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     public void cleanUsersTable() {
-
+        Statement statement;
+        String cleanSql = "truncate table minions";
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(cleanSql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
