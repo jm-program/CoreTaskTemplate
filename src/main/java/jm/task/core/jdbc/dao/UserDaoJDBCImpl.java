@@ -11,8 +11,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     Util conect = new Util();
 
-    public Connection connection = conect.getConnection();
-
     public UserDaoJDBCImpl() {
 
     }
@@ -28,7 +26,8 @@ public class UserDaoJDBCImpl implements UserDao {
                 "\tconstraint minions_pk\n" +
                 "\t\tprimary key (id)\n" +
                 ");";
-        try {
+
+        try (Connection connection = conect.getConnection()) {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
 
@@ -41,7 +40,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         Statement statement;
         String dropSql = "drop table if exists minions";
-        try {
+        try (Connection connection = conect.getConnection()) {
             statement = connection.createStatement();
             statement.executeUpdate(dropSql);
         } catch (SQLException e) {
@@ -53,12 +52,14 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         PreparedStatement preparedStatement;
         String userSql = "insert into minions (name, lastname, age) values (?, ?, ?)";
-        try {
+        try (Connection connection = conect.getConnection()) {
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(userSql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
+            connection.commit();
             System.out.println("Миньён c именем " + name + " добавлен в таблицу");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,10 +72,12 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) {
         PreparedStatement preparedStatement;
         String removeSql = "delete from minions where id = ?";
-        try {
+        try (Connection connection = conect.getConnection()) {
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(removeSql);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+            connection.commit();
             System.out.println("Миньён под номером :" + id + " был удален.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +90,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> list = new ArrayList<>();
         Statement statement;
         String allSql = "select * from minions";
-        try {
+        try (Connection connection = conect.getConnection()) {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(allSql);
             while (result.next()) {
@@ -109,7 +112,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         Statement statement;
         String cleanSql = "truncate table minions";
-        try {
+        try (Connection connection = conect.getConnection()) {
             statement = connection.createStatement();
             statement.executeUpdate(cleanSql);
         } catch (SQLException e) {
@@ -117,3 +120,5 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 }
+
+
