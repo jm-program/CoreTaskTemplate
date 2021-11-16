@@ -47,11 +47,13 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         PreparedStatement preparedStatement;
         String newUser = "insert into zergy (name, lastName, age) values (?, ?, ?)";
         try {
+            getConnect().setAutoCommit(false);
             preparedStatement = getConnect().prepareStatement(newUser);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.execute();
+            getConnect().commit();
             System.out.println("Морпех " + name + " прибыл");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,9 +65,11 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         PreparedStatement preparedStatement;
         String remove = "delete from zergy where id = ?";
         try {
+            getConnect().setAutoCommit(false);
             preparedStatement = getConnect().prepareStatement(remove);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
+            getConnect().commit();
             System.err.println("Морпеха под номером " + id + " сожрали Zergy");
         } catch (SQLException e) {
             e.printStackTrace();
