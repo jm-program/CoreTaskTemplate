@@ -48,17 +48,25 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         String newUser = "insert into zergy (name, lastName, age) values (?, ?, ?)";
         try {
             getConnect().setAutoCommit(false);
-            preparedStatement = getConnect().prepareStatement(newUser);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setByte(3, age);
-            preparedStatement.execute();
-            getConnect().commit();
-            System.out.println("Морпех " + name + " прибыл");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                preparedStatement = getConnect().prepareStatement(newUser);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setByte(3, age);
+                preparedStatement.execute();
+                getConnect().commit();
+                System.out.println("Морпех " + name + " прибыл");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            try {
+                getConnect().rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public void removeUserById(long id) {
@@ -66,16 +74,24 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         String remove = "delete from zergy where id = ?";
         try {
             getConnect().setAutoCommit(false);
-            preparedStatement = getConnect().prepareStatement(remove);
-            preparedStatement.setLong(1, id);
-            preparedStatement.execute();
-            getConnect().commit();
-            System.err.println("Морпеха под номером " + id + " сожрали Zergy");
+            try{
+                preparedStatement = getConnect().prepareStatement(remove);
+                preparedStatement.setLong(1, id);
+                preparedStatement.execute();
+                getConnect().commit();
+                System.err.println("Морпеха под номером " + id + " сожрали Zergy");
+            } catch (SQLException e) {
+                e.printStackTrace();
+        }
+    } catch (SQLException throwables) {
+        throwables.printStackTrace();
+        try {
+            getConnect().rollback();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+}
 
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
@@ -97,7 +113,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         }
         return list;
     }
-
 
 
     public void cleanUsersTable() {
