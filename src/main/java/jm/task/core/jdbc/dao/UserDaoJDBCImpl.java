@@ -52,7 +52,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         PreparedStatement preparedStatement;
         String userSql = "insert into minions (name, lastname, age) values (?, ?, ?)";
-        try (Connection connection = conect.getConnection()) {
+        Connection connection = conect.getConnection();
+        try  {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(userSql);
             preparedStatement.setString(1, name);
@@ -63,16 +64,20 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Миньён c именем " + name + " добавлен в таблицу");
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-
-
-
     }
+
 
     public void removeUserById(long id) {
         PreparedStatement preparedStatement;
         String removeSql = "delete from minions where id = ?";
-        try (Connection connection = conect.getConnection()) {
+        Connection connection = conect.getConnection();
+        try {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(removeSql);
             preparedStatement.setLong(1, id);
@@ -81,6 +86,11 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Миньён под номером :" + id + " был удален.");
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
 
     }
@@ -104,6 +114,7 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println(list);
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
 
         return list;
