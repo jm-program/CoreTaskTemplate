@@ -129,11 +129,19 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         Statement statement;
         String cleanSql = "truncate table minions";
-        try (Connection connection = conect.getConnection()) {
+        Connection connection = conect.getConnection();
+        try {
+            connection.setAutoCommit(false);
             statement = connection.createStatement();
             statement.executeUpdate(cleanSql);
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
