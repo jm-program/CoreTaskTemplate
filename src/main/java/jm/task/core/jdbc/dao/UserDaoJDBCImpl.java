@@ -97,17 +97,29 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         List<User> list = new ArrayList<>();
         Statement statement;
         try {
-            statement = getConnect().createStatement();
-            ResultSet resultSet = statement
-                    .executeQuery("select name, lastName, age from zergy");
-            while (resultSet.next()) {
-                String name = resultSet.getString(1);
-                String lastName = resultSet.getString(2);
-                Byte age = resultSet.getByte(3);
-                User user = new User(name, lastName, age);
-                list.add(user);
+            getConnect().setAutoCommit(false);
+            try {
+                statement = getConnect().createStatement();
+                ResultSet resultSet = statement
+                        .executeQuery("select name, lastName, age from zergy");
+                getConnect().commit();
+                while (resultSet.next()) {
+                    String name = resultSet.getString(1);
+                    String lastName = resultSet.getString(2);
+                    Byte age = resultSet.getByte(3);
+                    User user = new User(name, lastName, age);
+                    list.add(user);
+                }
+                System.out.println(list);
+            } catch (SQLException e) {
+                e.printStackTrace();
+
             }
-            System.out.println(list);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            getConnect().rollback();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,7 +127,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     }
 
 
-    public void cleanUsersTable() {
+        public void cleanUsersTable() {
         Statement statement;
         String clean = "truncate table zergy";
         try {
