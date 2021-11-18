@@ -100,7 +100,9 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> list = new ArrayList<>();
         Statement statement;
         String allSql = "select * from minions";
-        try (Connection connection = conect.getConnection()) {
+        Connection connection = conect.getConnection();
+        try {
+            connection.setAutoCommit(false);
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(allSql);
             while (result.next()) {
@@ -111,12 +113,16 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(result.getByte("age"));
                 list.add(user);
             }
+            connection.commit();
             System.out.println(list);
         } catch (SQLException e) {
             e.printStackTrace();
-
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-
         return list;
     }
 
