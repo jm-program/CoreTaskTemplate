@@ -22,6 +22,11 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return String.format("имя-%s, фамилия-%s, возраст-%d%n", name, lastName, age);
+    }
+
     public User(String name, String lastName, Byte age) {
         this.name = name;
         this.lastName = lastName;
@@ -59,4 +64,5 @@ public class User {
     public void setAge(Byte age) {
         this.age = age;
     }
+
 }
