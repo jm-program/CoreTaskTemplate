@@ -36,8 +36,8 @@ public class UserDaoJDBCImpl implements UserDao {
         }
 
     public void saveUser(String name, String lastName, byte age) {
-        String prepaStatment = "insert into  users.users (name, lastname, age) values(?, ?, ?)";
-        try (PreparedStatement prepareStatement = conn.prepareStatement(prepaStatment)) {
+        try (PreparedStatement prepareStatement = conn.prepareStatement("insert into  users.users " +
+                "(name, lastname, age) values(?, ?, ?)")) {
             prepareStatement.setString(1, name);
             prepareStatement.setString(2, lastName);
             prepareStatement.setInt(3, age);
@@ -49,9 +49,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String del = String.format("DELETE FROM users.users where id = %d", id);
-        try (Statement statement = conn.createStatement()) {
-            statement.executeUpdate(del);
+        try (PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM" +
+                " users.users where id = ?")) {
+            preparedStatement.setInt(1, (int) id);
+            preparedStatement.executeUpdate();
             System.out.println("Пользователь удалён!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,9 +79,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        String del = "DELETE FROM users.users";
         try (Statement statement = conn.createStatement()) {
-            statement.executeUpdate(del);
+            statement.executeUpdate("DELETE FROM users.users");
             System.out.println("Все пользователи удалены");
         } catch (SQLException e) {
             e.printStackTrace();
