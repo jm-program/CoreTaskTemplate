@@ -1,5 +1,6 @@
 package jm.task.core.jdbc;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Main {
         User user4 = new User("d", "dd", (byte) 23);
 
 
-        UserServiceImpl userService = new UserServiceImpl();
+        UserService userService = new UserServiceImpl();
         userService.createUsersTable();
         userService.saveUser(user1.getName(), user1.getLastName(), user1.getAge());
         userService.saveUser(user2.getName(), user2.getLastName(), user2.getAge());
@@ -25,9 +26,5 @@ public class Main {
         userService.removeUserById(2);
         userService.cleanUsersTable();
         userService.dropUsersTable();
-
-
-
-
     }
 }
