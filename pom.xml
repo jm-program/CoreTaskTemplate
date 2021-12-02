@@ -29,7 +29,6 @@
              <version>4.12</version>
              <scope>test</scope>
          </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -47,6 +46,5 @@
             <artifactId>hibernate-core</artifactId>
             <version>4.3.10.Final</version>
         </dependency>
-     </dependencies>
-
+    </dependencies>
 </project>
