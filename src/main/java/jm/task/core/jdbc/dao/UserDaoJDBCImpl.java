@@ -10,6 +10,7 @@ import java.util.List;
 import static jm.task.core.jdbc.util.Util.getConnection;
 
 public class UserDaoJDBCImpl implements UserDao {
+    Statement statement = null;
     private static String query = "SELECT * FROM users";
     private static String INSERT_USER = "INSERT INTO users(name, lastName, age) VALUES(?, ?, ?);";
     private static final String DELETE_USER = "DELETE FROM users WHERE id = ?";
@@ -19,7 +20,6 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        Statement statement = null;
         try {
             statement = getConnection().createStatement();
 
@@ -46,7 +46,6 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        Statement statement = null;
         try {
             statement = getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'users'");
@@ -119,7 +118,6 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        Statement statement = null;
         try {
             statement = getConnection().createStatement();
 
