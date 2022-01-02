@@ -27,8 +27,10 @@ public class UserDaoJDBCImpl implements UserDao {
                     "id INT NOT NULL AUTO_INCREMENT, " +
                     " name VARCHAR(20) NOT NULL, " +
                     " lastName VARCHAR (20) NOT NULL, " +
-                    " age INTEGER NOT NULL, " +
-                    "PRIMARY KEY (id))";
+                    " age TINYINT(1) NOT NULL, " +
+                    "PRIMARY KEY (id))" +
+                    "ENGINE = InnoDB\n" +
+                    "DEFAULT CHARACTER SET = utf8;\n";
 
             statement.executeUpdate(SQL);
 
@@ -47,11 +49,18 @@ public class UserDaoJDBCImpl implements UserDao {
         Statement statement = null;
         try {
             statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'users'");
+
+            boolean tableExist = false;
 
             String SQL = "DROP TABLE users";
+            while (resultSet.next()) {
+                tableExist = true;
+            }
 
-            statement.executeUpdate(SQL);
-
+            if (tableExist) {
+                statement.execute(SQL);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -70,6 +79,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
+            System.out.println("User с именем – " + name + " добавлен в базу данных");
 
         } catch (SQLException e) {
             e.printStackTrace();
