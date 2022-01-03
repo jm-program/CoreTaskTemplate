@@ -22,7 +22,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try {
             statement = getConnection().createStatement();
-
             String SQL = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INT NOT NULL AUTO_INCREMENT, " +
                     " name VARCHAR(20) NOT NULL, " +
@@ -31,9 +30,7 @@ public class UserDaoJDBCImpl implements UserDao {
                     "PRIMARY KEY (id))" +
                     "ENGINE = InnoDB\n" +
                     "DEFAULT CHARACTER SET = utf8;\n";
-
             statement.executeUpdate(SQL);
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -49,14 +46,11 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             statement = getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'users'");
-
             boolean tableExist = false;
-
             String SQL = "DROP TABLE users";
             while (resultSet.next()) {
                 tableExist = true;
             }
-
             if (tableExist) {
                 statement.execute(SQL);
             }
@@ -79,7 +73,6 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,7 +84,6 @@ public class UserDaoJDBCImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
             preparedStatement.setInt(1, (int) id);
             preparedStatement.executeUpdate();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -108,7 +100,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 String name = rs.getString("name");
                 String lastName = rs.getString("lastName");
                 byte age = rs.getByte("age");
-
                 users.add(new User(name, lastName, age));
             }
         } catch (SQLException throwables) {
@@ -120,9 +111,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try {
             statement = getConnection().createStatement();
-
             String SQL = "TRUNCATE TABLE users";
-
             statement.executeUpdate(SQL);
 
         } catch (SQLException throwables) {
