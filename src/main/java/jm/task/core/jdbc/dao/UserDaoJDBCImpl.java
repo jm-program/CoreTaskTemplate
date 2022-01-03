@@ -47,12 +47,11 @@ public class UserDaoJDBCImpl implements UserDao {
             statement = getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'users'");
             boolean tableExist = false;
-            String SQL = "DROP TABLE users";
             while (resultSet.next()) {
                 tableExist = true;
             }
             if (tableExist) {
-                statement.execute(SQL);
+                statement.execute("DROP TABLE users");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -111,8 +110,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try {
             statement = getConnection().createStatement();
-            String SQL = "TRUNCATE TABLE users";
-            statement.executeUpdate(SQL);
+            statement.executeUpdate("TRUNCATE TABLE users");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
