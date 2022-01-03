@@ -10,10 +10,10 @@ import org.hibernate.service.ServiceRegistry;
 import java.sql.*;
 
 public class Util {
+    private static SessionFactory sessionFactory;
     private static String dbURL = "jdbc:mysql://localhost:3306/users";
     private static String dbUsername = "root";
     private static String dbPassword = "root";
-    private static SessionFactory sessionFactory;
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -25,7 +25,7 @@ public class Util {
         return connection;
     }
 
-    public static SessionFactory getSessionFactory () {
+    public static SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration()
                 .setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver")
                 .setProperty(Environment.URL, dbURL)
@@ -40,4 +40,5 @@ public class Util {
 
         return sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     }
+
 }

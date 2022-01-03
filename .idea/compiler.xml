@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="TaskJDBC" />
         <module name="users" />
-        <module name="CoreTaskTemplate" />
+        <module name="TaskJDBC" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="CoreTaskTemplate" target="7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
