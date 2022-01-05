@@ -8,4 +8,11 @@
       </configuration>
     </facet>
   </component>
+<<<<<<< Updated upstream
+=======
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+>>>>>>> Stashed changes
 </module>

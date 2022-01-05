@@ -1,24 +1,22 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UserDaoHibernateImpl daoHibernate = new UserDaoHibernateImpl();
+        UserServiceImpl daoHibernate = new UserServiceImpl();
         daoHibernate.createUsersTable();
-        User roman = new User("Roman", "Patrushev", (byte) 26);
-        daoHibernate.saveUser(roman.getName(), roman.getLastName(), roman.getAge());
-        User vova = new User("Vladimir", "Putin", (byte) 69);
-        daoHibernate.saveUser(vova.getName(), vova.getLastName(), vova.getAge());
-        User andrey = new User("Andrey", "Gubin", (byte) 47);
-        daoHibernate.saveUser(andrey.getName(), andrey.getLastName(), andrey.getAge());
-        User pjer = new User("Pjer", "Narciss", (byte) 44);
-        daoHibernate.saveUser(pjer.getName(), pjer.getLastName(), pjer.getAge());
+        daoHibernate.saveUser("Roman", "Patrushev", (byte) 26);
+        daoHibernate.saveUser("Vladimir", "Putin", (byte) 69);;
+        daoHibernate.saveUser("Andrey", "Gubin", (byte) 47);
+        daoHibernate.saveUser("Pjer", "Narciss", (byte) 44);
         List<User> users = daoHibernate.getAllUsers();
         System.out.println(users);
         daoHibernate.cleanUsersTable();

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> getAllUsers() {
-        return new UserDaoJDBCImpl().getAllUsers();
+        return dao.getAllUsers();
     }
 
     public void cleanUsersTable() {
