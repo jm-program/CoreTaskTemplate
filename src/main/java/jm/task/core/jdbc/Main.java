@@ -4,6 +4,7 @@ import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UserDao daoHibernate = new UserDaoHibernateImpl();
+        UserService daoHibernate = new UserServiceImpl();
         daoHibernate.createUsersTable();
         daoHibernate.saveUser("Roman", "Patrushev", (byte) 26);
         daoHibernate.saveUser("Vladimir", "Putin", (byte) 69);;
