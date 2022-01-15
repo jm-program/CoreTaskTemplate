@@ -28,7 +28,6 @@ public class Main {
         printUSer(user3);
         userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
         printUSer(user4);
-        userService.removeUserById(2);
 
         List<User> allUsers = userService.getAllUsers();
         allUsers.forEach(System.out :: println);
