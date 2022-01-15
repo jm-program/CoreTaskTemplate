@@ -3,7 +3,6 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
-
 import java.util.List;
 
 public class Main {
@@ -29,6 +28,7 @@ public class Main {
         printUSer(user3);
         userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
         printUSer(user4);
+        userService.removeUserById(2);
 
         List<User> allUsers = userService.getAllUsers();
         allUsers.forEach(System.out :: println);
